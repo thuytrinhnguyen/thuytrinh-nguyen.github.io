@@ -44,9 +44,9 @@
         
     
 
-    <link rel="shortcut icon" href="/chloe-tech/assets/favicon_leafy.ico">
-    <link rel="stylesheet" href="/chloe-tech/assets/css/main.css">
-    <link rel="canonical" href="http://localhost:4000/chloe-tech/supervised-learning/2020/11/06/simple-linear-regression.html">
+    <link rel="shortcut icon" href="/assets/favicon_leafy.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="canonical" href="http://localhost:4000/supervised-learning/2020/11/06/simple-linear-regression.html">
 
     <!-- For Latex -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
@@ -102,22 +102,22 @@
 
     <div class="wrapper">
         
-        <a class="site-title" href="/chloe-tech/">Chloe&#39;s Blog</a>
+        <a class="site-title" href="/">Chloe&#39;s Blog</a>
 
         <!-- <nav class="site-nav">
             <a class="page-link" href="http://lilianweng.github.io" target="_blank">&#x1f349; About</a>
         </nav> -->
         <nav class="site-nav">
-            <a class="page-link" href="/chloe-tech/contact.html">&#x1f984; Contact</a>
+            <a class="page-link" href="/contact.html">&#x1f984; Contact</a>
         </nav>
         <nav class="site-nav">
-            <a class="page-link" href="/chloe-tech/FAQ.html">&#x1F64B; FAQ</a>
+            <a class="page-link" href="/FAQ.html">&#x1F64B; FAQ</a>
         </nav>
         <!-- <nav class="site-nav">
-            <a class="page-link" href="/chloe-tech/log.html">&#x231b; Log</a>
+            <a class="page-link" href="/log.html">&#x231b; Log</a>
         </nav> -->
         <nav class="site-nav">
-            <a class="page-link" href="/chloe-tech/archive.html">&#x231b; Archive</a>
+            <a class="page-link" href="/archive.html">&#x231b; Archive</a>
         </nav>
 
     </div>
@@ -197,7 +197,7 @@
 
 <p>\(\beta_0\) is the intercept and \(\beta_1\) is the coefficient (or slope). The name <em>linear regression</em> suggests that the relationship resembles a straight line.</p>
 
-<p style="width: 400px;" class="center"><img src="/chloe-tech/assets/images/slr-regplot.png" alt="SLR Regplot" /></p>
+<p style="width: 400px;" class="center"><img src="/assets/images/slr-regplot.png" alt="SLR Regplot" /></p>
 <p><em>Fig. 1. Visualization of a Simple Linear Regression problem</em></p>
 
 <p>However, there can hardly be a perfect line that fits all the observations. Hence, errors are expected and we should find a way to minimize them. These errors are called <strong>Residual Sum of Squares (RSS)</strong> which measures the total of <em>squared</em> differences between our predictions and the true values (the differences are squared to prevent negative and positive values from cancelling out each other). The formula for RSS is as follows:</p>
@@ -206,14 +206,14 @@
 
 <p>In this post, I will discuss two different approaches to find the “perfect” line by optimizing RSS. While Least Squares method provides a <em>one-shot</em> solution for the problem, Gradient Descent <em>gradually adapts</em> to it.</p>
 
-<p style="100%" class="center"><img src="/chloe-tech/assets/images/least-squares-vs-gradient-descent.png" alt="Compare Least Squares and Gradient Descent" /></p>
+<p style="100%" class="center"><img src="/assets/images/least-squares-vs-gradient-descent.png" alt="Compare Least Squares and Gradient Descent" /></p>
 <p><em>Fig. 2. Basic ideas of Least Squares method and Gradient Descent</em></p>
 
 <h2 id="least-squares-method">Least Squares Method</h2>
 
 <p>The objective is to find values of \(\beta_0\) and \(\beta_1\) that minimize RSS. We know from calculus that by taking the first derivative of a function (e.g \(f(x)\)), and setting it to 0, we can solve for critical values that minimize \(f(x)\). This method works because the RSS function is convex, therefore, it has one global minima.</p>
 
-<p style="width: 400px;" class="center"><img src="/chloe-tech/assets/images/3d-rss-slr.png" alt="3D plot of RSS" /></p>
+<p style="width: 400px;" class="center"><img src="/assets/images/3d-rss-slr.png" alt="3D plot of RSS" /></p>
 <p><em>Fig. 3. 3D plot of Residual Sum of Squares (RSS) (Source: <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/">Introduction to Statistical Learning</a>)</em></p>
 
 <p>The details of how to derive the formulas are included in the <a href="## BONUS: Least Squares - Formula Derivation">BONUS Section</a>. But to summarize, we can obtain \(\beta_0\) and \(\beta_1\) using:</p>
@@ -243,7 +243,7 @@
 
 <p><strong>Disadvantages</strong></p>
 
-<p style="100%" class="center"><img src="/chloe-tech/assets/images/learning-rate-gradient-descent.png" alt="Learning rates in Gradient Descent" /></p>
+<p style="100%" class="center"><img src="/assets/images/learning-rate-gradient-descent.png" alt="Learning rates in Gradient Descent" /></p>
 <p><em>Fig. 4. The choice of Learning rate can greatly affect Gradient Descent performance</em></p>
 
 <p>Choosing the hyperparameter - <strong>learning rate (\(\alpha\)) can be a trouble</strong> in Gradient Descent. Learning rate determines the step size of each iteration. If \(\alpha\) is too large, there will be lots of deviation and it is difficult to hit the global minima, or cannot hit the spot at all! If \(\alpha\) is too small, it will take a long time to reach the global minima. Learning rate is a hyperparameter meaning that we need to allocate a value for it. <em>“Is there a perfect learning rate?”</em> - you may ask, it <strong>depends on the problem</strong>, but some popular choices are 0.1, 0.05, 0.01 or smaller values, but we don’t always use a constant learning rate to run the whole model. For instance, in deep learning applications, we usually use learning rate decay (e.g. divide the learning rate in half after every 50 iterations) to prevent the gradients from exploding or vanishing. But for now, let’s look at <em>Fig. 4</em> to see what different choices of learning rate look like in Simple Linear Regression.</p>
@@ -355,20 +355,20 @@
 
     <div style="clear: both;"/>
 <footer class="site-footer">
-    2019 &copy; Built by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://github.com/jekyll/minima/" target="_blank">minima</a> | View <a href="https://github.com/lilianweng/lil-log/tree/gh-pages" target="_blank">this</a> on Github | <a href="/chloe-tech/tags.html">Tags</a> | <a href="/chloe-tech/contact.html">Contact</a> | <a href="/chloe-tech/FAQ.html">FAQ</a>
+    2019 &copy; Built by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://github.com/jekyll/minima/" target="_blank">minima</a> | View <a href="https://github.com/lilianweng/lil-log/tree/gh-pages" target="_blank">this</a> on Github | <a href="/tags.html">Tags</a> | <a href="/contact.html">Contact</a> | <a href="/FAQ.html">FAQ</a>
 
     <p>
-        <a href="/chloe-tech/feed.xml" target="_blank">
-            <img src="/chloe-tech/assets/images/logo_rss.png" />
+        <a href="//feed.xml" target="_blank">
+            <img src="/assets/images/logo_rss.png" />
         </a>
         <a href=" " target="_blank">
-            <img src="/chloe-tech/assets/images/logo_scholar.png" />
+            <img src="/assets/images/logo_scholar.png" />
         </a>
         <a href=" " target="_blank">
-            <img src="/chloe-tech/assets/images/logo_github.png" />
+            <img src="/assets/images/logo_github.png" />
         </a>
         <a href=" " target="_blank">
-            <img src="/chloe-tech/assets/images/logo_instagram.png" />
+            <img src="/assets/images/logo_instagram.png" />
         </a>
     </p>
 </footer>

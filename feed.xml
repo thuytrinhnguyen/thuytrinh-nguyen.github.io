@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/chloe-tech/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/chloe-tech/" rel="alternate" type="text/html" /><updated>2020-11-08T04:10:41+11:00</updated><id>http://localhost:4000/chloe-tech/feed.xml</id><title type="html">Chloe’s Blog</title><subtitle>Summarize my learning journey</subtitle><author><name>Chloe Nguyen</name></author><entry><title type="html">Simple Linear Regression: Least Squares VS. Gradient Descent</title><link href="http://localhost:4000/chloe-tech/supervised-learning/2020/11/06/simple-linear-regression.html" rel="alternate" type="text/html" title="Simple Linear Regression: Least Squares VS. Gradient Descent" /><published>2020-11-06T00:04:00+11:00</published><updated>2020-11-06T00:04:00+11:00</updated><id>http://localhost:4000/chloe-tech/supervised-learning/2020/11/06/simple-linear-regression</id><content type="html" xml:base="http://localhost:4000/chloe-tech/supervised-learning/2020/11/06/simple-linear-regression.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-11-08T04:19:40+11:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Chloe’s Blog</title><subtitle>Summarize my learning journey</subtitle><author><name>Chloe Nguyen</name></author><entry><title type="html">Simple Linear Regression: Least Squares VS. Gradient Descent</title><link href="http://localhost:4000/supervised-learning/2020/11/06/simple-linear-regression.html" rel="alternate" type="text/html" title="Simple Linear Regression: Least Squares VS. Gradient Descent" /><published>2020-11-06T00:04:00+11:00</published><updated>2020-11-06T00:04:00+11:00</updated><id>http://localhost:4000/supervised-learning/2020/11/06/simple-linear-regression</id><content type="html" xml:base="http://localhost:4000/supervised-learning/2020/11/06/simple-linear-regression.html">&lt;blockquote&gt;
   &lt;p&gt;This post sheds light on the motivation of Simple Linear Regression and discusses the two optimization methods Least Squares VS. Gradient Descent. Formulas derivation is also included at the end of the post as a bonus.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -34,7 +34,7 @@
 
 &lt;p&gt;\(\beta_0\) is the intercept and \(\beta_1\) is the coefficient (or slope). The name &lt;em&gt;linear regression&lt;/em&gt; suggests that the relationship resembles a straight line.&lt;/p&gt;
 
-&lt;p style=&quot;width: 400px;&quot; class=&quot;center&quot;&gt;&lt;img src=&quot;/chloe-tech/assets/images/slr-regplot.png&quot; alt=&quot;SLR Regplot&quot; /&gt;&lt;/p&gt;
+&lt;p style=&quot;width: 400px;&quot; class=&quot;center&quot;&gt;&lt;img src=&quot;/assets/images/slr-regplot.png&quot; alt=&quot;SLR Regplot&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Fig. 1. Visualization of a Simple Linear Regression problem&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;However, there can hardly be a perfect line that fits all the observations. Hence, errors are expected and we should find a way to minimize them. These errors are called &lt;strong&gt;Residual Sum of Squares (RSS)&lt;/strong&gt; which measures the total of &lt;em&gt;squared&lt;/em&gt; differences between our predictions and the true values (the differences are squared to prevent negative and positive values from cancelling out each other). The formula for RSS is as follows:&lt;/p&gt;
@@ -43,14 +43,14 @@
 
 &lt;p&gt;In this post, I will discuss two different approaches to find the “perfect” line by optimizing RSS. While Least Squares method provides a &lt;em&gt;one-shot&lt;/em&gt; solution for the problem, Gradient Descent &lt;em&gt;gradually adapts&lt;/em&gt; to it.&lt;/p&gt;
 
-&lt;p style=&quot;100%&quot; class=&quot;center&quot;&gt;&lt;img src=&quot;/chloe-tech/assets/images/least-squares-vs-gradient-descent.png&quot; alt=&quot;Compare Least Squares and Gradient Descent&quot; /&gt;&lt;/p&gt;
+&lt;p style=&quot;100%&quot; class=&quot;center&quot;&gt;&lt;img src=&quot;/assets/images/least-squares-vs-gradient-descent.png&quot; alt=&quot;Compare Least Squares and Gradient Descent&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Fig. 2. Basic ideas of Least Squares method and Gradient Descent&lt;/em&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;least-squares-method&quot;&gt;Least Squares Method&lt;/h2&gt;
 
 &lt;p&gt;The objective is to find values of \(\beta_0\) and \(\beta_1\) that minimize RSS. We know from calculus that by taking the first derivative of a function (e.g \(f(x)\)), and setting it to 0, we can solve for critical values that minimize \(f(x)\). This method works because the RSS function is convex, therefore, it has one global minima.&lt;/p&gt;
 
-&lt;p style=&quot;width: 400px;&quot; class=&quot;center&quot;&gt;&lt;img src=&quot;/chloe-tech/assets/images/3d-rss-slr.png&quot; alt=&quot;3D plot of RSS&quot; /&gt;&lt;/p&gt;
+&lt;p style=&quot;width: 400px;&quot; class=&quot;center&quot;&gt;&lt;img src=&quot;/assets/images/3d-rss-slr.png&quot; alt=&quot;3D plot of RSS&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Fig. 3. 3D plot of Residual Sum of Squares (RSS) (Source: &lt;a href=&quot;http://faculty.marshall.usc.edu/gareth-james/ISL/&quot;&gt;Introduction to Statistical Learning&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;The details of how to derive the formulas are included in the &lt;a href=&quot;## BONUS: Least Squares - Formula Derivation&quot;&gt;BONUS Section&lt;/a&gt;. But to summarize, we can obtain \(\beta_0\) and \(\beta_1\) using:&lt;/p&gt;
@@ -80,7 +80,7 @@
 
 &lt;p&gt;&lt;strong&gt;Disadvantages&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p style=&quot;100%&quot; class=&quot;center&quot;&gt;&lt;img src=&quot;/chloe-tech/assets/images/learning-rate-gradient-descent.png&quot; alt=&quot;Learning rates in Gradient Descent&quot; /&gt;&lt;/p&gt;
+&lt;p style=&quot;100%&quot; class=&quot;center&quot;&gt;&lt;img src=&quot;/assets/images/learning-rate-gradient-descent.png&quot; alt=&quot;Learning rates in Gradient Descent&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Fig. 4. The choice of Learning rate can greatly affect Gradient Descent performance&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Choosing the hyperparameter - &lt;strong&gt;learning rate (\(\alpha\)) can be a trouble&lt;/strong&gt; in Gradient Descent. Learning rate determines the step size of each iteration. If \(\alpha\) is too large, there will be lots of deviation and it is difficult to hit the global minima, or cannot hit the spot at all! If \(\alpha\) is too small, it will take a long time to reach the global minima. Learning rate is a hyperparameter meaning that we need to allocate a value for it. &lt;em&gt;“Is there a perfect learning rate?”&lt;/em&gt; - you may ask, it &lt;strong&gt;depends on the problem&lt;/strong&gt;, but some popular choices are 0.1, 0.05, 0.01 or smaller values, but we don’t always use a constant learning rate to run the whole model. For instance, in deep learning applications, we usually use learning rate decay (e.g. divide the learning rate in half after every 50 iterations) to prevent the gradients from exploding or vanishing. But for now, let’s look at &lt;em&gt;Fig. 4&lt;/em&gt; to see what different choices of learning rate look like in Simple Linear Regression.&lt;/p&gt;
