@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+      
+
+
+
+
+
+
+    
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Simple Linear Regression: Least Squares VS. Gradient Descent</title>
+
+    <meta name="description" content="This post sheds light on the motivation of Simple Linear Regression and discusses the two optimization methods Least Squares VS. Gradient Descent. Formulas d...">
+
+    <meta content="Chloe's Blog" property="og:site_name">
+    
+        <meta content="Simple Linear Regression: Least Squares VS. Gradient Descent" property="og:title">
+    
+    
+        <meta content="article" property="og:type">
+    
+    
+        <meta content="This post sheds light on the motivation of Simple Linear Regression and discusses the two optimization methods Least Squares VS. Gradient Descent. Formulas derivation is also included at the end of the post as a bonus." property="og:description">
+    
+    
+        <meta content="http://localhost:4000/supervised-learning/2020/11/06/simple-linear-regression.html" property="og:url">
+    
+    
+        <meta content="2020-11-06T00:04:00+11:00" property="article:published_time">
+        <meta content="http://localhost:4000/about/" property="article:author">
+    
+    
+    
+        
+        <meta content="regression" property="article:tag">
+        
+    
+
+    <link rel="shortcut icon" href="/chloe-tech/assets/favicon_leafy.ico">
+    <link rel="stylesheet" href="/chloe-tech/assets/css/main.css">
+    <link rel="canonical" href="http://localhost:4000/chloe-tech/supervised-learning/2020/11/06/simple-linear-regression.html">
+
+    <!-- For Latex -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-8161570-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- For Facebook share button -->
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- Twitter cards -->
+    <meta name="twitter:site"    content="@">
+    <meta name="twitter:creator" content="@Chloe Nguyen">
+    <meta name="twitter:title"   content="Simple Linear Regression: Least Squares VS. Gradient Descent">
+
+    
+        <meta name="twitter:description" content="<blockquote>
+  <p>This post sheds light on the motivation of Simple Linear Regression and discusses the two optimization methods Least Squares VS. Gradient Descent. Formulas derivation is also included at the end of the post as a bonus.</p>
+</blockquote>
+
+">
+    
+
+    
+        <meta name="twitter:card"  content="summary">
+        <meta name="twitter:image" content="">
+    
+    <!-- end of Twitter cards -->
+
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner" id='header-bar'>
+
+    <div class="wrapper">
+        
+        <a class="site-title" href="/chloe-tech/">Chloe&#39;s Blog</a>
+
+        <!-- <nav class="site-nav">
+            <a class="page-link" href="http://lilianweng.github.io" target="_blank">&#x1f349; About</a>
+        </nav> -->
+        <nav class="site-nav">
+            <a class="page-link" href="/chloe-tech/contact.html">&#x1f984; Contact</a>
+        </nav>
+        <nav class="site-nav">
+            <a class="page-link" href="/chloe-tech/FAQ.html">&#x1F64B; FAQ</a>
+        </nav>
+        <!-- <nav class="site-nav">
+            <a class="page-link" href="/chloe-tech/log.html">&#x231b; Log</a>
+        </nav> -->
+        <nav class="site-nav">
+            <a class="page-link" href="/chloe-tech/archive.html">&#x231b; Archive</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Simple Linear Regression: Least Squares VS. Gradient Descent</h1>
+    <p class="post-meta">
+
+      <time datetime="2020-11-06T00:04:00+11:00" itemprop="datePublished">
+        
+        Nov 6, 2020
+      </time>
+
+      <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        by <span itemprop="name">Chloe Nguyen</span>
+      </span>
+
+      <span>
+        
+          
+          <a class="post-tag" href="/myblog/tag/regression"><nobr>regression</nobr>&nbsp;</a>
+        
+      </span>
+      <!--
+      <span class="share-buttons">
+        <span class="share-button"><a class="twitter-share-button" href="https://twitter.com/share" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></span>
+
+        <span class="share-button"><span class="fb-like" data-href="/supervised-learning/2020/11/06/simple-linear-regression.html" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></span></span>
+      </span>
+      <div style="clear: both;"/>
+      -->
+
+    </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <blockquote>
+  <p>This post sheds light on the motivation of Simple Linear Regression and discusses the two optimization methods Least Squares VS. Gradient Descent. Formulas derivation is also included at the end of the post as a bonus.</p>
+</blockquote>
+
+<!--more-->
+<p>It is human nature to be certain about our future and to make predictions based on existing clues. Hence, the idea of studying about the <strong>association</strong> among subjects interests us. The first entry of the blog is dedicated to such an idea, it is about one basic concept in supervised learning: <strong>Simple Linear Regression</strong>.</p>
+
+<ul class="table-of-content" id="markdown-toc">
+  <li><a href="#motivation" id="markdown-toc-motivation">Motivation</a></li>
+  <li><a href="#least-squares-method" id="markdown-toc-least-squares-method">Least Squares Method</a></li>
+  <li><a href="#gradient-descent-method" id="markdown-toc-gradient-descent-method">Gradient Descent Method</a></li>
+  <li><a href="#model-evaluation" id="markdown-toc-model-evaluation">Model Evaluation</a>    <ul>
+      <li><a href="#residual-standard-error-rse" id="markdown-toc-residual-standard-error-rse">Residual Standard Error (RSE)</a></li>
+      <li><a href="#coefficient-of-determination-r2" id="markdown-toc-coefficient-of-determination-r2">Coefficient of Determination (\(R^{2}\))</a></li>
+    </ul>
+  </li>
+  <li><a href="#summary" id="markdown-toc-summary">Summary</a>    <ul>
+      <li><a href="#key-takeaways" id="markdown-toc-key-takeaways">Key Takeaways</a></li>
+      <li><a href="#limitation" id="markdown-toc-limitation">Limitation</a></li>
+    </ul>
+  </li>
+  <li><a href="#bonus-least-squares---formula-derivation" id="markdown-toc-bonus-least-squares---formula-derivation">BONUS: Least Squares - Formula Derivation</a>    <ul>
+      <li><a href="#find-beta_0" id="markdown-toc-find-beta_0">Find \(\beta_0\)</a></li>
+      <li><a href="#find-beta_1" id="markdown-toc-find-beta_1">Find \(\beta_1\)</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="motivation">Motivation</h2>
+
+<p>Simple Linear Regression assumes that the independent \((x)\) and dependent \((y)\) variables have a linear relationship. Our estimation of relationship is summarized in the formula below:</p>
+
+\[\hat{y} = \beta_0 + \beta_1x\]
+
+<p>\(\beta_0\) is the intercept and \(\beta_1\) is the coefficient (or slope). The name <em>linear regression</em> suggests that the relationship resembles a straight line.</p>
+
+<p style="width: 400px;" class="center"><img src="/chloe-tech/assets/images/slr-regplot.png" alt="SLR Regplot" /></p>
+<p><em>Fig. 1. Visualization of a Simple Linear Regression problem</em></p>
+
+<p>However, there can hardly be a perfect line that fits all the observations. Hence, errors are expected and we should find a way to minimize them. These errors are called <strong>Residual Sum of Squares (RSS)</strong> which measures the total of <em>squared</em> differences between our predictions and the true values (the differences are squared to prevent negative and positive values from cancelling out each other). The formula for RSS is as follows:</p>
+
+\[RSS = \sum_{i=1}^{n}(y_i - \hat{y}_i)^{2} = \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^{2}\]
+
+<p>In this post, I will discuss two different approaches to find the “perfect” line by optimizing RSS. While Least Squares method provides a <em>one-shot</em> solution for the problem, Gradient Descent <em>gradually adapts</em> to it.</p>
+
+<p style="100%" class="center"><img src="/chloe-tech/assets/images/least-squares-vs-gradient-descent.png" alt="Compare Least Squares and Gradient Descent" /></p>
+<p><em>Fig. 2. Basic ideas of Least Squares method and Gradient Descent</em></p>
+
+<h2 id="least-squares-method">Least Squares Method</h2>
+
+<p>The objective is to find values of \(\beta_0\) and \(\beta_1\) that minimize RSS. We know from calculus that by taking the first derivative of a function (e.g \(f(x)\)), and setting it to 0, we can solve for critical values that minimize \(f(x)\). This method works because the RSS function is convex, therefore, it has one global minima.</p>
+
+<p style="width: 400px;" class="center"><img src="/chloe-tech/assets/images/3d-rss-slr.png" alt="3D plot of RSS" /></p>
+<p><em>Fig. 3. 3D plot of Residual Sum of Squares (RSS) (Source: <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/">Introduction to Statistical Learning</a>)</em></p>
+
+<p>The details of how to derive the formulas are included in the <a href="## BONUS: Least Squares - Formula Derivation">BONUS Section</a>. But to summarize, we can obtain \(\beta_0\) and \(\beta_1\) using:</p>
+
+\[\beta_0 = \bar{y} - \beta_1 \bar{x}\]
+
+\[\beta_1 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^{2}}\]
+
+<p>By plugging in these two parameters, we can now find the perfect line to fit our data and predict future values: \(\hat{y}_i = \beta_0 + \beta_1 x_i\).</p>
+
+<p><strong>Advantages</strong></p>
+
+<p>Using Least Squares method, we can calculate the exact values of \(\beta_0\) and \(\beta_1\) using all \(x\) and \(y\) values in <strong>one shot</strong>. The idea is <strong>straightforward</strong> and well-known. For Simple Linear Regression, applying this method is effective because we only deal with two variables. This method is suitable for smaller datasets.</p>
+
+<p><strong>Disadvantages</strong></p>
+
+<p>Least Squares method is <strong>limited to only a few loss functions</strong> of certain shapes (e.g. RSS is a convex function). This method is expensive to implement on multivariate problems and mega datasets when <strong>complex matrix operations</strong> involve (will be discussed later in Multiple Regression module). Therefore, instead of arriving at the bottom of the bowl (i.e. reaching the global minima) in one go, we can go downhill gradually. That is the inspiration of Gradient Descent.</p>
+
+<h2 id="gradient-descent-method">Gradient Descent Method</h2>
+<p>Gradient Descent is a more general concept compared to Least Squares as it can be used on various loss functions. In the application of Simple Linear Regression, we can also use Gradient Descent to optimize RSS. The idea of Gradient Descent, as its name suggests, is to update the parameters gradually until the result reaches a certain threshold or completes a desired number of iterations (i.e. <em>epoches</em>). You can set up a <em>for-loop</em> in Python to run Gradient Descent using the formula:</p>
+
+\[\beta_k = \beta_k - \alpha \times \frac{\partial RSS}{\partial \beta_k}  \;\; ; \;\; k =0, 1\]
+
+<p><strong>Advantages</strong></p>
+
+<p>Gradient Descent works on a <strong>diversity of loss functions</strong>. Because of its versatility, Gradient Descent is a popular optimization technique used in many machine learning applications. Another benefit is that the computation step of updating the parameter is quite simple (usually the difficult part of complex models is to calculate the derivative of the loss function with respect to the parameters). Therefore, when dealing with multivariate problems such as Multiple Regression for <strong>large datasets</strong>, Gradient Descent has an edge over Least Square method (by not having to calculate the matrix inverses - we will discuss this in later entries).</p>
+
+<p><strong>Disadvantages</strong></p>
+
+<p style="100%" class="center"><img src="/chloe-tech/assets/images/learning-rate-gradient-descent.png" alt="Learning rates in Gradient Descent" /></p>
+<p><em>Fig. 4. The choice of Learning rate can greatly affect Gradient Descent performance</em></p>
+
+<p>Choosing the hyperparameter - <strong>learning rate (\(\alpha\)) can be a trouble</strong> in Gradient Descent. Learning rate determines the step size of each iteration. If \(\alpha\) is too large, there will be lots of deviation and it is difficult to hit the global minima, or cannot hit the spot at all! If \(\alpha\) is too small, it will take a long time to reach the global minima. Learning rate is a hyperparameter meaning that we need to allocate a value for it. <em>“Is there a perfect learning rate?”</em> - you may ask, it <strong>depends on the problem</strong>, but some popular choices are 0.1, 0.05, 0.01 or smaller values, but we don’t always use a constant learning rate to run the whole model. For instance, in deep learning applications, we usually use learning rate decay (e.g. divide the learning rate in half after every 50 iterations) to prevent the gradients from exploding or vanishing. But for now, let’s look at <em>Fig. 4</em> to see what different choices of learning rate look like in Simple Linear Regression.</p>
+
+<h2 id="model-evaluation">Model Evaluation</h2>
+
+<p>After fitting the model, we should check whether we have done a good job or if there are any mistakes. To assess the accuracy of the model, we will discuss two related quantities: Residual Standard Error (RSE) and Coefficient of Determination (\(R^{2}\)).</p>
+
+<h3 id="residual-standard-error-rse">Residual Standard Error (RSE)</h3>
+<p>RSE is the measurement for the <em>lack of fit</em>. Although we have applied discussed techniques to achieve the “best” line, we would not be able to fit that line through all data points. This is because the relationship between \(X\) and \(Y\) are not perfectly linear. Comparing the <em>true</em> equation \(y = \beta_0 + \beta_1x + \epsilon\) to our <em>estimated</em> equation \(y = \beta_0 + \beta_1x\), it is clear that the error term \(\epsilon\) is not covered.</p>
+
+\[RSE = \sqrt{\frac{1}{n-2}RSS} = \sqrt{\frac{1}{n-2}\sum_{i=1}^{n}(y_i - \hat{y}_i)^{2}}\]
+
+<p>If \(y_i \approx \hat{y}_i\), which indicates that our prediction is close to the true value, RSE will be small and we can conclude that our model is a good fit for the data. On the other hand, if the model is not a good fit, \((y_i - \hat{y}_i)^{2}\) will be large and so as RSE.</p>
+
+<h3 id="coefficient-of-determination-r2">Coefficient of Determination (\(R^{2}\))</h3>
+<p>On the other end of the spectrum, \(R^{2}\) is the measurement of <em>model good fit</em>. It can be interpreted as <strong>the amount of variations in \(Y\) that can be explained by \(X\)</strong> using our model.</p>
+
+\[R^2 = 1 - \frac{RSS}{TSS} = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^{2}}{\sum_{i=1}^{n}(y_i - \bar{y})^{2}}\]
+
+<p>RSS is the variations left in \(Y\) after fitting our model, this is how much the model is lacking. TSS is the total variations (or the natural variations) in \(Y\) before fitting the model. Therefore, \(R^2\) shows how much variations in \(Y\) are resolved by our model. \(R^2\) score lies between 0 and 1. For example, \(R^2 = 0.75\) means that \(75\%\) of the variations in \(Y\) is explained by our model. A higher value of \(R^2\) indicates great goodness of fit and vice versa.</p>
+
+<h2 id="summary">Summary</h2>
+<h3 id="key-takeaways">Key Takeaways</h3>
+<p>In this post, we cover the core ideas of Simple Linear Regression and discuss two methods to optimize this model. The Least Squares method is straightforward and allows us to find \(\beta_0\) and \(\beta_1\) directly using two formulas. Gradient Descent can be used for a diversity of loss functions and can arrive at the solution gradually as long as we set a reasonable learning rate.</p>
+
+<p>After optimizing the model, we can assess its accuracy using RSE and \(R^2\), which represents the lack of fit and goodness of fit respectively. Thus, a good model should have low \(RSE\) and high \(R^2\).</p>
+
+<h3 id="limitation">Limitation</h3>
+<p>Though the simplicity of the model is a good point, Simple Linear Regression has many shortcomings. Today, we will briefly look at two major limitations. Firstly, Simple Linear Regression has an oversimplified assumption. In reality, many relationships are non-linear. Hence, forcing the relationship to be linear will not produce accurate predictions. Secondly, there can be many contributing factors to a problem and they can also have some interaction effects. Therefore, instead of having multiple Simple Linear Regression models, there should be an upgrade that takes into account the <em>synergy</em> among variables. To answer that, we will consider <strong>Multiple Linear Regression</strong> in the next entry.</p>
+
+<p><strong>Chloe’s Note</strong></p>
+<blockquote>
+  <p>Thank you so much for checking out my first post. Please let me know if you have any ideas on improving this post. As a bonus, I have included the details on how to derive Least Squares formulas. Hope this will be helpful. Also, stay tuned for my future posts :D</p>
+</blockquote>
+
+<h2 id="bonus-least-squares---formula-derivation">BONUS: Least Squares - Formula Derivation</h2>
+<p><strong>Objective:</strong> Find values of \(\beta_0\) and \(\beta_1\) that minimize RSS:</p>
+
+\[RSS = \sum_{i=1}^{n}(y_i - \hat{y}_i)^{2} = \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^{2}\]
+
+<h3 id="find-beta_0">Find \(\beta_0\)</h3>
+<p>First, find the partial derivative of RSS with respect to \(\beta_0\) treating \(x, y\) and \(\beta_1\) as constants:</p>
+
+\[\frac{\partial RSS}{\partial \beta_0} = -2 \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1x_i)\]
+
+<p>Next, we set this value to 0 and solve for \(\beta_0\):</p>
+
+\[\frac{\partial RSS}{\partial \beta_0} = -2 \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1x_i) = 0\]
+
+\[\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1x_i) = 0\]
+
+\[\sum_{i=1}^{n}y_i - n\beta_0 - n\beta_1 \sum_{i=1}^{n}x_i = 0\]
+
+\[\beta_0 = \frac{\sum_{i=1}^{n}y_i - \beta_1 \sum_{i=1}^{n}x_i}{n}\]
+
+<p>Because:  \(\frac{\sum_{i=1}^{n}x_i}{n} = \bar{x}\)   and    \(\frac{\sum_{i=1}^{n}y_i}{n} = \bar{y}\):</p>
+
+\[{\color{Blue} {\beta_0 = \bar{y} - \beta_1 \bar{x}}}\]
+
+<h3 id="find-beta_1">Find \(\beta_1\)</h3>
+<p>Similarly, we find the partial derivative of RSS with respect to \(\beta_1\) and set it to 0:</p>
+
+\[\frac{\partial RSS}{\partial \beta_1} = -2 \sum_{i=1}^{n}x_i(y_i - \beta_0 - \beta_1x_i) = 0\]
+
+\[\sum_{i=1}^{n}x_iy_i - \beta_0 \sum_{i=1}^{n}x_i - \beta_1 \sum_{i=1}^{n}x_i^{2} = 0\]
+
+<p>Plug in \(\beta_0 = \bar{y} - \beta_1 \bar{x}\):</p>
+
+\[\sum_{i=1}^{n}x_iy_i - (\bar{y} - \beta_1 \bar{x})\sum_{i=1}^{n}x_i - \beta_1\sum_{i=1}^{n}x_i^{2} = 0\]
+
+\[\sum_{i=1}^{n}x_iy_i - \bar{y}\sum_{i=1}^{n}x_i + \beta_1 \bar{x}\sum_{i=1}^{n}x_i - \beta_1\sum_{i=1}^{n}x_i^{2} = 0\]
+
+\[\sum_{i=1}^{n}x_i(y_i - \bar{y}) - \beta_1 \sum_{i=1}^{n}x_i (x_i - \bar{x}) = 0\]
+
+<p>Solve for \(\beta_1\):</p>
+
+\[\beta_1 = \frac{\sum_{i=1}^{n}x_i(y_i - \bar{y})}{\sum_{i=1}^{n}x_i (x_i - \bar{x})}\]
+
+<p>We can conclude here and use this equation to find \(\beta_1\), but the more widely used variation in books and lecture notes is:</p>
+
+\[\beta_1 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^{2}} = \frac{S_{XY}}{S_{XX}}\]
+
+<p>Many people find the equation above easier to remember as its numerator \((S_{XY})\) and denominator \((S_{XX})\) are the outputs of some software functions. With a few algebra adjustments, we can transform our original equation into its well-known form:</p>
+
+\[\beta_1 = \frac{\sum_{i=1}^{n}x_i(y_i - \bar{y})}{\sum_{i=1}^{n}x_i (x_i - \bar{x})}\]
+
+\[\beta_1 = \frac{\sum_{i=1}^{n}x_i(y_i - \bar{y}) - \sum_{i=1}^{n} \bar{x} (y_i - \bar{y}) + \sum_{i=1}^{n} \bar{x} (y_i - \bar{y})}{\sum_{i=1}^{n}x_i (x_i - \bar{x}) - \sum_{i=1}^{n}\bar{x}(x_i - \bar{x}) + \sum_{i=1}^{n}\bar{x}(x_i - \bar{x})}\]
+
+\[\beta_1 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y}) + \bar{x} (\sum_{i=1}^{n}y_i - n\bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^{2} + \bar{x} (\sum_{i=1}^{n}x_i - n\bar{x})}\]
+
+<p><strong>Note</strong>: In the last term of the equation in the numerator, (1) \(\bar{x}\) is a number so it can come out of the sum and (2) \(\sum_{i=1}^{n}y_i = n\bar{y}\). Therefore, \(\bar{x} (\sum_{i=1}^{n}y_i - n\bar{y}) = 0\). The same thing applies to the denominator, we have the final equation:</p>
+
+\[{\color{Blue} {\beta_1 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^{2}}}}\]
+
+  </div>
+
+
+  <div class="page-navigation">
+    
+
+    
+  </div>
+
+</article>
+
+      </div>
+    </main>
+
+    <div style="clear: both;"/>
+<footer class="site-footer">
+    2019 &copy; Built by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://github.com/jekyll/minima/" target="_blank">minima</a> | View <a href="https://github.com/lilianweng/lil-log/tree/gh-pages" target="_blank">this</a> on Github | <a href="/chloe-tech/tags.html">Tags</a> | <a href="/chloe-tech/contact.html">Contact</a> | <a href="/chloe-tech/FAQ.html">FAQ</a>
+
+    <p>
+        <a href="/chloe-tech/feed.xml" target="_blank">
+            <img src="/chloe-tech/assets/images/logo_rss.png" />
+        </a>
+        <a href=" " target="_blank">
+            <img src="/chloe-tech/assets/images/logo_scholar.png" />
+        </a>
+        <a href=" " target="_blank">
+            <img src="/chloe-tech/assets/images/logo_github.png" />
+        </a>
+        <a href=" " target="_blank">
+            <img src="/chloe-tech/assets/images/logo_instagram.png" />
+        </a>
+    </p>
+</footer>
+
+
+  </body>
+
+</html>
