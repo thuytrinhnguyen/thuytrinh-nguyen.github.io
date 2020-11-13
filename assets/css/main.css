@@ -262,3 +262,7 @@ div.qa .question { border-radius: 5px; background: #eeeeee; padding: 5px; paddin
 @media screen and (max-width: 800px) { .post-content h4 { font-size: 18px; } }
 .post-content a { border-bottom: 1px dotted #bbb; padding-bottom: 1px; }
 .post-content a:hover { color: #f9493f; border-bottom: 1px solid #f9493f; padding-bottom: 1px; text-decoration: none; }
+
+figcaption { text-align: center; font-style: italic; }
+
+.width_400 img { width: 400px; }

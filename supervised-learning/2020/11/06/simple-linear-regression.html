@@ -15,7 +15,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta property="og:image" content="https://raw.githubusercontent.com/thuytrinhnguyen/thuytrinhnguyen.github.io/main/assets/images/learning-rate-gradient-descent.png">
     <title>Simple Linear Regression: Least Squares VS. Gradient Descent</title>
 
     <meta name="description" content="This post sheds light on the motivation of Simple Linear Regression and discusses the two optimization methods Least Squares VS. Gradient Descent. Formulas d...">
@@ -42,9 +42,13 @@
         
         <meta content="regression" property="article:tag">
         
+        <meta content="least-squares" property="article:tag">
+        
+        <meta content="gradient-descent" property="article:tag">
+        
     
 
-    <link rel="shortcut icon" href="/assets/favicon_leafy.ico">
+    <link rel="shortcut icon" href="/assets/favicon_cactus.ico">
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="canonical" href="http://localhost:4000/supervised-learning/2020/11/06/simple-linear-regression.html">
 
@@ -147,6 +151,12 @@
           
           <a class="post-tag" href="/myblog/tag/regression"><nobr>regression</nobr>&nbsp;</a>
         
+          
+          <a class="post-tag" href="/myblog/tag/least-squares"><nobr>least-squares</nobr>&nbsp;</a>
+        
+          
+          <a class="post-tag" href="/myblog/tag/gradient-descent"><nobr>gradient-descent</nobr>&nbsp;</a>
+        
       </span>
       <!--
       <span class="share-buttons">
@@ -187,6 +197,7 @@
       <li><a href="#find-beta_1" id="markdown-toc-find-beta_1">Find \(\beta_1\)</a></li>
     </ul>
   </li>
+  <li><a href="#reference" id="markdown-toc-reference">Reference</a></li>
 </ul>
 
 <h2 id="motivation">Motivation</h2>
@@ -197,8 +208,10 @@
 
 <p>\(\beta_0\) is the intercept and \(\beta_1\) is the coefficient (or slope). The name <em>linear regression</em> suggests that the relationship resembles a straight line.</p>
 
-<p style="width: 400px;" class="center"><img src="/assets/images/slr-regplot.png" alt="SLR Regplot" /></p>
-<p><em>Fig. 1. Visualization of a Simple Linear Regression problem</em></p>
+<figure class="width_400">
+<p><img src="/assets/images/slr-regplot.png" alt="SLR Regplot" /></p>
+  <figcaption>Fig. 1. Visualization of a Simple Linear Regression problem</figcaption>
+</figure>
 
 <p>However, there can hardly be a perfect line that fits all the observations. Hence, errors are expected and we should find a way to minimize them. These errors are called <strong>Residual Sum of Squares (RSS)</strong> which measures the total of <em>squared</em> differences between our predictions and the true values (the differences are squared to prevent negative and positive values from cancelling out each other). The formula for RSS is as follows:</p>
 
@@ -206,17 +219,21 @@
 
 <p>In this post, I will discuss two different approaches to find the “perfect” line by optimizing RSS. While Least Squares method provides a <em>one-shot</em> solution for the problem, Gradient Descent <em>gradually adapts</em> to it.</p>
 
-<p style="100%" class="center"><img src="/assets/images/least-squares-vs-gradient-descent.png" alt="Compare Least Squares and Gradient Descent" /></p>
-<p><em>Fig. 2. Basic ideas of Least Squares method and Gradient Descent</em></p>
+<figure>
+<p><img src="/assets/images/least-squares-vs-gradient-descent.png" alt="Compare Least Squares and Gradient Descent" /></p>
+  <figcaption>Fig. 2. Basic ideas of Least Squares method and Gradient Descent</figcaption>
+</figure>
 
 <h2 id="least-squares-method">Least Squares Method</h2>
 
-<p>The objective is to find values of \(\beta_0\) and \(\beta_1\) that minimize RSS. We know from calculus that by taking the first derivative of a function (e.g \(f(x)\)), and setting it to 0, we can solve for critical values that minimize \(f(x)\). This method works because the RSS function is convex, therefore, it has one global minima.</p>
+<p>The objective is to find values of \(\beta_0\) and \(\beta_1\) that minimize RSS. We know from calculus that by taking the first derivative of a function (e.g \(f(x)\)), and setting it to 0, we can solve for critical values that minimize \(f(x)\). This method works because the RSS function is convex, therefore, it has one global minimum.</p>
 
-<p style="width: 400px;" class="center"><img src="/assets/images/3d-rss-slr.png" alt="3D plot of RSS" /></p>
-<p><em>Fig. 3. 3D plot of Residual Sum of Squares (RSS) (Source: <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/">Introduction to Statistical Learning</a>)</em></p>
+<figure class="width_400">
+<p><img src="/assets/images/3d-rss-slr.png" alt="3D plot of RSS" /></p>
+  <figcaption>Fig. 3. 3D plot of Residual Sum of Squares (RSS) (Source: <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/">Introduction to Statistical Learning</a>)</figcaption>
+</figure>
 
-<p>The details of how to derive the formulas are included in the <a href="## BONUS: Least Squares - Formula Derivation">BONUS Section</a>. But to summarize, we can obtain \(\beta_0\) and \(\beta_1\) using:</p>
+<p>The details of how to derive the formulas are included in the <a href="## BONUS: Least Squares - Formula Derivation">BONUS Section</a>. To summarize, we can obtain \(\beta_0\) and \(\beta_1\) using:</p>
 
 \[\beta_0 = \bar{y} - \beta_1 \bar{x}\]
 
@@ -230,7 +247,7 @@
 
 <p><strong>Disadvantages</strong></p>
 
-<p>Least Squares method is <strong>limited to only a few loss functions</strong> of certain shapes (e.g. RSS is a convex function). This method is expensive to implement on multivariate problems and mega datasets when <strong>complex matrix operations</strong> involve (will be discussed later in Multiple Regression module). Therefore, instead of arriving at the bottom of the bowl (i.e. reaching the global minima) in one go, we can go downhill gradually. That is the inspiration of Gradient Descent.</p>
+<p>Least Squares method is <strong>limited to only a few loss functions</strong> of certain shapes (e.g. RSS is a convex function). This method is expensive to implement on multivariate problems and mega datasets when <strong>complex matrix operations</strong> involve (will be discussed later in Multiple Regression module). Therefore, instead of arriving at the bottom of the bowl (i.e. reaching the global minimum) in one go, we can go downhill gradually. That is the inspiration of Gradient Descent.</p>
 
 <h2 id="gradient-descent-method">Gradient Descent Method</h2>
 <p>Gradient Descent is a more general concept compared to Least Squares as it can be used on various loss functions. In the application of Simple Linear Regression, we can also use Gradient Descent to optimize RSS. The idea of Gradient Descent, as its name suggests, is to update the parameters gradually until the result reaches a certain threshold or completes a desired number of iterations (i.e. <em>epoches</em>). You can set up a <em>for-loop</em> in Python to run Gradient Descent using the formula:</p>
@@ -243,14 +260,16 @@
 
 <p><strong>Disadvantages</strong></p>
 
-<p style="100%" class="center"><img src="/assets/images/learning-rate-gradient-descent.png" alt="Learning rates in Gradient Descent" /></p>
-<p><em>Fig. 4. The choice of Learning rate can greatly affect Gradient Descent performance</em></p>
+<figure>
+<p><img src="/assets/images/learning-rate-gradient-descent.png" alt="Learning rates in Gradient Descent" /></p>
+  <figcaption>Fig. 4. The choice of Learning rate can greatly affect Gradient Descent performance.</figcaption>
+</figure>
 
-<p>Choosing the hyperparameter - <strong>learning rate (\(\alpha\)) can be a trouble</strong> in Gradient Descent. Learning rate determines the step size of each iteration. If \(\alpha\) is too large, there will be lots of deviation and it is difficult to hit the global minima, or cannot hit the spot at all! If \(\alpha\) is too small, it will take a long time to reach the global minima. Learning rate is a hyperparameter meaning that we need to allocate a value for it. <em>“Is there a perfect learning rate?”</em> - you may ask, it <strong>depends on the problem</strong>, but some popular choices are 0.1, 0.05, 0.01 or smaller values, but we don’t always use a constant learning rate to run the whole model. For instance, in deep learning applications, we usually use learning rate decay (e.g. divide the learning rate in half after every 50 iterations) to prevent the gradients from exploding or vanishing. But for now, let’s look at <em>Fig. 4</em> to see what different choices of learning rate look like in Simple Linear Regression.</p>
+<p>Choosing the hyperparameter - <strong>learning rate (\(\alpha\)) can be a trouble</strong> in Gradient Descent. Learning rate determines the step size of each iteration. If \(\alpha\) is too large, there will be lots of deviation and it is difficult to hit the global minimum, or cannot hit the spot at all! If \(\alpha\) is too small, it will take a long time to reach the global minimum. Learning rate is a hyperparameter meaning that we need to allocate a value for it. <em>“Is there a perfect learning rate?”</em> - you may ask, it <strong>depends on the problem</strong>, but some popular choices are 0.1, 0.05, 0.01 or smaller values, but we don’t always use a constant learning rate to run the whole model. For instance, in deep learning applications, we usually use learning rate decay (e.g. divide the learning rate in half after every 50 iterations) to prevent the gradients from exploding or vanishing. But for now, let’s look at <em>Fig. 4</em> to see what different choices of learning rate look like in Simple Linear Regression.</p>
 
 <h2 id="model-evaluation">Model Evaluation</h2>
 
-<p>After fitting the model, we should check whether we have done a good job or if there are any mistakes. To assess the accuracy of the model, we will discuss two related quantities: Residual Standard Error (RSE) and Coefficient of Determination (\(R^{2}\)).</p>
+<p>After fitting the model, we should check whether we have done a good job or if there are any mistakes. To assess the accuracy of the model, we will discuss two related quantities: Residual Standard Error (RSE) and Coefficient of Determination (\(R^{2}\)) <a class="citation" href="#james2013introduction">(James et al., 2013)</a>.</p>
 
 <h3 id="residual-standard-error-rse">Residual Standard Error (RSE)</h3>
 <p>RSE is the measurement for the <em>lack of fit</em>. Although we have applied discussed techniques to achieve the “best” line, we would not be able to fit that line through all data points. This is because the relationship between \(X\) and \(Y\) are not perfectly linear. Comparing the <em>true</em> equation \(y = \beta_0 + \beta_1x + \epsilon\) to our <em>estimated</em> equation \(y = \beta_0 + \beta_1x\), it is clear that the error term \(\epsilon\) is not covered.</p>
@@ -275,9 +294,9 @@
 <h3 id="limitation">Limitation</h3>
 <p>Though the simplicity of the model is a good point, Simple Linear Regression has many shortcomings. Today, we will briefly look at two major limitations. Firstly, Simple Linear Regression has an oversimplified assumption. In reality, many relationships are non-linear. Hence, forcing the relationship to be linear will not produce accurate predictions. Secondly, there can be many contributing factors to a problem and they can also have some interaction effects. Therefore, instead of having multiple Simple Linear Regression models, there should be an upgrade that takes into account the <em>synergy</em> among variables. To answer that, we will consider <strong>Multiple Linear Regression</strong> in the next entry.</p>
 
-<p><strong>Chloe’s Note</strong></p>
+<p><strong>Chloe’s End Note</strong></p>
 <blockquote>
-  <p>Thank you so much for checking out my first post. Please let me know if you have any ideas on improving this post. As a bonus, I have included the details on how to derive Least Squares formulas. Hope this will be helpful. Also, stay tuned for my future posts :D</p>
+  <p>Thank you so much for checking out my first post. Please let me know if you have any ideas on improving this post. As a bonus, I have included the details on how to derive Least Squares formulas. Hope that they will be helpful to someone. Also, stay tuned for my future posts :D</p>
 </blockquote>
 
 <h2 id="bonus-least-squares---formula-derivation">BONUS: Least Squares - Formula Derivation</h2>
@@ -292,11 +311,11 @@
 
 <p>Next, we set this value to 0 and solve for \(\beta_0\):</p>
 
-\[\frac{\partial RSS}{\partial \beta_0} = -2 \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1x_i) = 0\]
-
-\[\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1x_i) = 0\]
-
-\[\sum_{i=1}^{n}y_i - n\beta_0 - n\beta_1 \sum_{i=1}^{n}x_i = 0\]
+\[\begin{aligned}
+-2 \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1x_i) &amp; = 0 \\
+\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1x_i) &amp; = 0 \\
+\sum_{i=1}^{n}y_i - n\beta_0 - n\beta_1 \sum_{i=1}^{n}x_i &amp; = 0 \\
+\end{aligned}\]
 
 \[\beta_0 = \frac{\sum_{i=1}^{n}y_i - \beta_1 \sum_{i=1}^{n}x_i}{n}\]
 
@@ -307,17 +326,18 @@
 <h3 id="find-beta_1">Find \(\beta_1\)</h3>
 <p>Similarly, we find the partial derivative of RSS with respect to \(\beta_1\) and set it to 0:</p>
 
-\[\frac{\partial RSS}{\partial \beta_1} = -2 \sum_{i=1}^{n}x_i(y_i - \beta_0 - \beta_1x_i) = 0\]
-
-\[\sum_{i=1}^{n}x_iy_i - \beta_0 \sum_{i=1}^{n}x_i - \beta_1 \sum_{i=1}^{n}x_i^{2} = 0\]
+\[\begin{aligned}
+\frac{\partial RSS}{\partial \beta_1} = -2 \sum_{i=1}^{n}x_i(y_i - \beta_0 - \beta_1x_i) &amp; = 0 \\
+\sum_{i=1}^{n}x_iy_i - \beta_0 \sum_{i=1}^{n}x_i - \beta_1 \sum_{i=1}^{n}x_i^{2} &amp; = 0
+\end{aligned}\]
 
 <p>Plug in \(\beta_0 = \bar{y} - \beta_1 \bar{x}\):</p>
 
-\[\sum_{i=1}^{n}x_iy_i - (\bar{y} - \beta_1 \bar{x})\sum_{i=1}^{n}x_i - \beta_1\sum_{i=1}^{n}x_i^{2} = 0\]
-
-\[\sum_{i=1}^{n}x_iy_i - \bar{y}\sum_{i=1}^{n}x_i + \beta_1 \bar{x}\sum_{i=1}^{n}x_i - \beta_1\sum_{i=1}^{n}x_i^{2} = 0\]
-
-\[\sum_{i=1}^{n}x_i(y_i - \bar{y}) - \beta_1 \sum_{i=1}^{n}x_i (x_i - \bar{x}) = 0\]
+\[\begin{aligned}
+\sum_{i=1}^{n}x_iy_i - (\bar{y} - \beta_1 \bar{x})\sum_{i=1}^{n}x_i - \beta_1\sum_{i=1}^{n}x_i^{2} &amp; = 0 \\
+\sum_{i=1}^{n}x_iy_i - \bar{y}\sum_{i=1}^{n}x_i + \beta_1 \bar{x}\sum_{i=1}^{n}x_i - \beta_1\sum_{i=1}^{n}x_i^{2} &amp; = 0 \\
+\sum_{i=1}^{n}x_i(y_i - \bar{y}) - \beta_1 \sum_{i=1}^{n}x_i (x_i - \bar{x}) &amp; = 0 \\
+\end{aligned}\]
 
 <p>Solve for \(\beta_1\):</p>
 
@@ -329,15 +349,20 @@
 
 <p>Many people find the equation above easier to remember as its numerator \((S_{XY})\) and denominator \((S_{XX})\) are the outputs of some software functions. With a few algebra adjustments, we can transform our original equation into its well-known form:</p>
 
-\[\beta_1 = \frac{\sum_{i=1}^{n}x_i(y_i - \bar{y})}{\sum_{i=1}^{n}x_i (x_i - \bar{x})}\]
+\[\begin{aligned}
+\beta_1 
+&amp;= \frac{\sum_{i=1}^{n}x_i(y_i - \bar{y})}{\sum_{i=1}^{n}x_i (x_i - \bar{x})} \\
+&amp;= \frac{\sum_{i=1}^{n}x_i(y_i - \bar{y}) - \sum_{i=1}^{n} \bar{x} (y_i - \bar{y}) + \sum_{i=1}^{n} \bar{x} (y_i - \bar{y})}{\sum_{i=1}^{n}x_i (x_i - \bar{x}) - \sum_{i=1}^{n}\bar{x}(x_i - \bar{x}) + \sum_{i=1}^{n}\bar{x}(x_i - \bar{x})} \\
+&amp;= \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y}) + \bar{x} (\sum_{i=1}^{n}y_i - n\bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^{2} + \bar{x} (\sum_{i=1}^{n}x_i - n\bar{x})}
+\end{aligned}\]
 
-\[\beta_1 = \frac{\sum_{i=1}^{n}x_i(y_i - \bar{y}) - \sum_{i=1}^{n} \bar{x} (y_i - \bar{y}) + \sum_{i=1}^{n} \bar{x} (y_i - \bar{y})}{\sum_{i=1}^{n}x_i (x_i - \bar{x}) - \sum_{i=1}^{n}\bar{x}(x_i - \bar{x}) + \sum_{i=1}^{n}\bar{x}(x_i - \bar{x})}\]
-
-\[\beta_1 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y}) + \bar{x} (\sum_{i=1}^{n}y_i - n\bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^{2} + \bar{x} (\sum_{i=1}^{n}x_i - n\bar{x})}\]
-
-<p><strong>Note</strong>: In the last term of the equation in the numerator, (1) \(\bar{x}\) is a number so it can come out of the sum and (2) \(\sum_{i=1}^{n}y_i = n\bar{y}\). Therefore, \(\bar{x} (\sum_{i=1}^{n}y_i - n\bar{y}) = 0\). The same thing applies to the denominator, we have the final equation:</p>
+<p><strong>Note</strong>: In the last term of the equation in the numerator, (1) \(\bar{x}\) is a number, so it can come out of the sum and (2) \(\sum_{i=1}^{n}y_i = n\bar{y}\). Therefore, \(\bar{x} (\sum_{i=1}^{n}y_i - n\bar{y}) = 0\). The same thing applies to the denominator, we have the final equation:</p>
 
 \[{\color{Blue} {\beta_1 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^{2}}}}\]
+
+<h2 id="reference">Reference</h2>
+
+<ol class="bibliography"><li><span id="james2013introduction">James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2013). <i>An introduction to statistical learning</i> (Vol. 112). Springer.</span></li></ol>
 
   </div>
 
@@ -345,6 +370,8 @@
   <div class="page-navigation">
     
 
+    
+      <a class="next" href="/deeplearning/2020/11/08/mnist-tutorial-basic-neural-network.html">MNIST Tutorial - Neural Networks approach from scratch in Python &rarr;</a>
     
   </div>
 
@@ -358,7 +385,7 @@
     2019 &copy; Built by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://github.com/jekyll/minima/" target="_blank">minima</a> | View <a href="https://github.com/thuytrinhnguyen/myblog" target="_blank">this</a> on Github | <a href="/tags.html">Tags</a> | <a href="/contact.html">Contact</a> | <a href="/FAQ.html">FAQ</a>
 
     <p>
-        <a href="//feed.xml" target="_blank">
+        <a href="/feed.xml" target="_blank">
             <img src="/assets/images/logo_rss.png" />
         </a>
         <a href=" " target="_blank">

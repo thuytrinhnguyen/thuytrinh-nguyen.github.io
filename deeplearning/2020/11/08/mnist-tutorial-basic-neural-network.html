@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+      
+
+
+
+
+
+
+    
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:image" content="https://raw.githubusercontent.com/thuytrinhnguyen/thuytrinhnguyen.github.io/main/assets/images/learning-rate-gradient-descent.png">
+    <title>MNIST Tutorial - Neural Networks approach from scratch in Python</title>
+
+    <meta name="description" content="A neural network = Forward path + Backward path. Simple, isn’t it? Let’s build one from scratch and classify handwritten digits.">
+
+    <meta content="Chloe's Tech Journey" property="og:site_name">
+    
+        <meta content="MNIST Tutorial - Neural Networks approach from scratch in Python" property="og:title">
+    
+    
+        <meta content="article" property="og:type">
+    
+    
+        <meta content="A neural network = Forward path + Backward path. Simple, isn’t it? Let’s build one from scratch and classify handwritten digits." property="og:description">
+    
+    
+        <meta content="http://localhost:4000/deeplearning/2020/11/08/mnist-tutorial-basic-neural-network.html" property="og:url">
+    
+    
+        <meta content="2020-11-08T14:08:00+11:00" property="article:published_time">
+        <meta content="http://localhost:4000/about/" property="article:author">
+    
+    
+    
+        
+        <meta content="neural-networks" property="article:tag">
+        
+        <meta content="deeplearning" property="article:tag">
+        
+        <meta content="mnist" property="article:tag">
+        
+    
+
+    <link rel="shortcut icon" href="/assets/favicon_cactus.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="canonical" href="http://localhost:4000/deeplearning/2020/11/08/mnist-tutorial-basic-neural-network.html">
+
+    <!-- For Latex -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-8161570-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- For Facebook share button -->
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- Twitter cards -->
+    <meta name="twitter:site"    content="@">
+    <meta name="twitter:creator" content="@Chloe Nguyen">
+    <meta name="twitter:title"   content="MNIST Tutorial - Neural Networks approach from scratch in Python">
+
+    
+        <meta name="twitter:description" content="<blockquote>
+  <p>A neural network = Forward path + Backward path. Simple, isn’t it? Let’s build one from scratch and classify handwritten digits.</p>
+</blockquote>
+
+">
+    
+
+    
+        <meta name="twitter:card"  content="summary">
+        <meta name="twitter:image" content="">
+    
+    <!-- end of Twitter cards -->
+
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner" id='header-bar'>
+
+    <div class="wrapper">
+        
+        <a class="site-title" href="/">Chloe&#39;s Tech Journey</a>
+
+        <!-- <nav class="site-nav">
+            <a class="page-link" href="http://lilianweng.github.io" target="_blank">&#x1f349; About</a>
+        </nav> -->
+        <nav class="site-nav">
+            <a class="page-link" href="/contact.html">&#x1f984; Contact</a>
+        </nav>
+        <nav class="site-nav">
+            <a class="page-link" href="/FAQ.html">&#x1F64B; FAQ</a>
+        </nav>
+        <!-- <nav class="site-nav">
+            <a class="page-link" href="/log.html">&#x231b; Log</a>
+        </nav> -->
+        <nav class="site-nav">
+            <a class="page-link" href="/archive.html">&#x231b; Archive</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">MNIST Tutorial - Neural Networks approach from scratch in Python</h1>
+    <p class="post-meta">
+
+      <time datetime="2020-11-08T14:08:00+11:00" itemprop="datePublished">
+        
+        Nov 8, 2020
+      </time>
+
+      <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        by <span itemprop="name">Chloe Nguyen</span>
+      </span>
+
+      <span>
+        
+          
+          <a class="post-tag" href="/myblog/tag/neural-networks"><nobr>neural-networks</nobr>&nbsp;</a>
+        
+          
+          <a class="post-tag" href="/myblog/tag/deeplearning"><nobr>deeplearning</nobr>&nbsp;</a>
+        
+          
+          <a class="post-tag" href="/myblog/tag/mnist"><nobr>mnist</nobr>&nbsp;</a>
+        
+      </span>
+      <!--
+      <span class="share-buttons">
+        <span class="share-button"><a class="twitter-share-button" href="https://twitter.com/share" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></span>
+
+        <span class="share-button"><span class="fb-like" data-href="/deeplearning/2020/11/08/mnist-tutorial-basic-neural-network.html" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></span></span>
+      </span>
+      <div style="clear: both;"/>
+      -->
+
+    </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <blockquote>
+  <p>A neural network = Forward path + Backward path. Simple, isn’t it? Let’s build one from scratch and classify handwritten digits.</p>
+</blockquote>
+
+<!--more-->
+
+<p>These days, popular programming frameworks offer users convenient functions to construct a variety of neural networks using a few lines of code. But sometimes knowing how things work behind the scene can be interesting so in this tutorial, I will show you how to build a minimal neural network from scratch in Python. The objective is to use this model to classify handwritten digits from the common dataset MNIST.</p>
+
+<figure>
+<p><img src="/assets/images/mnist-dataset.png" alt="MNIST Sample Images" /></p>
+  <figcaption>Fig. 1. Sample images from MNIST dataset (Image source: <a href="https://www.wikiwand.com/en/MNIST_database">Wikiwand</a>).</figcaption>
+</figure>
+
+<p><mark><b>Highlights</b></mark></p>
+
+<ul class="table-of-content" id="markdown-toc">
+  <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
+  <li><a href="#step-by-step-implementation" id="markdown-toc-step-by-step-implementation">Step-by-step Implementation</a>    <ul>
+      <li><a href="#step-1-download-dataset" id="markdown-toc-step-1-download-dataset">Step 1: Download dataset</a></li>
+      <li><a href="#step-2-load-the-data" id="markdown-toc-step-2-load-the-data">Step 2: Load the data</a></li>
+      <li><a href="#step-3-helper-functions" id="markdown-toc-step-3-helper-functions">Step 3: Helper functions</a></li>
+      <li><a href="#step-4-forward-path" id="markdown-toc-step-4-forward-path">Step 4: Forward path</a></li>
+      <li><a href="#step-5-backward-path" id="markdown-toc-step-5-backward-path">Step 5: Backward path</a></li>
+      <li><a href="#step-6-putting-it-all-together" id="markdown-toc-step-6-putting-it-all-together">Step 6: Putting it all together</a></li>
+    </ul>
+  </li>
+  <li><a href="#wrap-up-highlights" id="markdown-toc-wrap-up-highlights">Wrap-up Highlights</a></li>
+  <li><a href="#references" id="markdown-toc-references">References</a></li>
+</ul>
+
+<h2 id="overview">Overview</h2>
+
+<p>We will construct a minimal Neural network with one hidden layer and a 10-class softmax classifier output layer. My advice is to draft out the formulas and dimensions of all parameters beforehand which will help us debug the codes easier. The plan is to <strong>(1)</strong> load the dataset, <strong>(2)</strong> build the forward path, <strong>(3)</strong> code the backward path and <strong>(4)</strong> combine everything into a model. Along the way, we will define some helper functions.</p>
+
+<figure>
+<p><img src="/assets/images/mnist-tutorial-nn-ach.png" alt="Neural Network Architecture" /></p>
+  <figcaption>Fig. 2. The minimal Neural Network has one hidden layer and a softmax classifier.</figcaption>
+</figure>
+
+<h2 id="step-by-step-implementation">Step-by-step Implementation</h2>
+
+<h3 id="step-1-download-dataset">Step 1: Download dataset</h3>
+<p>You can download <strong>MNIST dataset</strong> from various sources, I download mine from <a href="https://www.kaggle.com/oddrationale/mnist-in-csv">Kaggle</a>. Simply save and unzip the package. There are two files in the folder: <em>mnist_train.csv</em> and <em>mnist_test.csv</em>, each contain both the <strong>features (X)</strong> and the <strong>label (Y)</strong>.</p>
+
+<h3 id="step-2-load-the-data">Step 2: Load the data</h3>
+<p>Firstly, we need to separate <strong>features (X)</strong> and <strong>label (Y)</strong> and perform some data preprocessing operations on them. The label is the first column followed by 784 columns of image pixels (i.e. X are 28x28 images) in both the training and testing sets. The training set has 60,000 entries while the testing set has 10,000.</p>
+
+<p>Because X are grayscale images, the pixel values vary greatly from 0 to 255, we can normalize them by dividing all pixels by 255. On the other hand, we need to convert the labels into one-hot vectors to classify the 10 digits (0 - 9). I will summarize the process in Fig. 3, the same operations are applied to the test set.</p>
+
+<figure>
+<p><img src="/assets/images/mnist-tutorial-nn-data.png" alt="Data" /></p>
+  <figcaption>Fig. 3. demonstrates data preparation and dimensions of X and Y in MNIST training dataset.</figcaption>
+</figure>
+
+<p>Here is a handy code snippet to convert the labels into one-hot embeddings:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Y_train</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">Y_train</span><span class="p">[</span><span class="n">Y_train_idx</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Y_train_idx</span><span class="p">.</span><span class="n">size</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<h3 id="step-3-helper-functions">Step 3: Helper functions</h3>
+
+<p><strong>Initialize parameters</strong></p>
+
+<p>All the weights (W) should have dimensions of \((n^{[l]}, n^{[l-1]})\), where \(n^{[l]}\) is the number of neurons in the current layer and \(n^{[l]}\) is that of the previous one. I recommend applying <a href="https://towardsdatascience.com/weight-initialization-techniques-in-neural-networks-26c649eb3b78">He initialization</a> to optimize the initializer. For the biases, we can initialize them to be zero vectors with the dimension of the current layer.</p>
+
+<p>Note: The way I set <code>layers = [50, 10]</code> does not include the dimension of the Input layer (X), therefore, I specify two cases in the code.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">init_params</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">layers</span><span class="p">):</span>
+    <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">W</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">W</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">layers</span><span class="p">[</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">layers</span><span class="p">[</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">b</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">layers</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span>
+</code></pre></div></div>
+
+<p><strong>ReLU</strong></p>
+
+<p>The ReLU function simply outputs Z if Z is positive and 0 otherwise. You can make use of the <code>maximum()</code> function in numpy library.</p>
+
+<p><strong>Softmax</strong></p>
+
+<p>We will use Softmax activation to generate the probability for each digit in the 10-dimension vector. We can construct the Softmax activation using the formula:</p>
+
+\[A^{L}_{i} =  \frac{e^{z^{L}_{i}}}{\sum_{j=1}^{N}e^{z^{L}_{j}}}\]
+
+<p>where \(A^{L}_{i}\) is the probability of each node and K is the number of nodes/classifiers of the last layer.</p>
+
+<p><strong>Compute cost</strong></p>
+
+<p>The cost function of Softmax for one example (for K classes) is:</p>
+
+<p><mark>$$ - \sum_{j=1}^{K} y_j \; log (\hat{y}_j)$$</mark></p>
+
+<p>To calculate the loss, sum the cost of all training examples. This function serves two purposes. Firstly, by printing the cost, we can observe the trend of the model. If the cost does not decrease gradually, this means there are probably some bugs in the code. Secondly, because the cost function fluctuates across iterations, by tracking the training and testing (validating) cost, we can decide on the optimal number of epoch that minimize the cost of testing dataset.</p>
+
+<p><strong>Update parameters</strong></p>
+
+<p>To keep things simple, in the tutorial, I will apply Gradient Descent to optimize the weights and biases for each layer:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">update_params</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+        <span class="n">W</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">W</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">dW</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+        <span class="n">b</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">db</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span>
+</code></pre></div></div>
+
+<p><strong>Predict</strong></p>
+
+<p>Evaluating the accuracy of the model can be as straightforward as run a forward round using the <em>optimal</em> weights and biases and compare the results to the ground truth labels. Note that since the outputs of the model are 10-dimensional vectors, we need to transform the outcomes to its single-digit form as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">A</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+    <span class="n">Y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">Y_pred</span> <span class="o">==</span> <span class="n">Y</span><span class="p">)</span> <span class="o">/</span> <span class="n">Y</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">accuracy</span>
+</code></pre></div></div>
+
+<h3 id="step-4-forward-path">Step 4: Forward path</h3>
+
+<p>To calculate the forward path, we calculate Z and A of layer \([l]\) using the formula:</p>
+
+\[Z^{[l]} = W^{[l]} \times A^{[l-1]} + b^{[l]}\]
+
+\[A^{[l]} = g^{[l]}(Z^{[l]})\]
+
+<p>where \(g^{[l]}\) is the activation of layer \(l\) (ReLU and Softmax).</p>
+
+<p>We store Z and A as dictionaries to access them later for the backward path and to make prediction. Remember that our model only has one 50-unit hidden layer and a 10-class softmax layer, we define <code>layers = [50, 10]</code>. Therefore, we set the first previous <code>A_prev = X</code>. For the iteration, we will pass in <code>L = len(layers)</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+    <span class="n">Z</span><span class="p">,</span> <span class="n">A</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+    <span class="n">A_prev</span> <span class="o">=</span> <span class="n">X</span>                                  <span class="c1"># Initiate X as A[0]
+</span>    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">A_prev</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>                   <span class="c1"># Update A of previous layers
+</span>        <span class="n">Z</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">A_prev</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>            
+            <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">relu</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">Z</span><span class="p">,</span> <span class="n">A</span>
+</code></pre></div></div>
+
+<h3 id="step-5-backward-path">Step 5: Backward path</h3>
+
+<p>To update the parameters (W and b), we need to find the derivative of the loss function with respect to each of the parameter. This can be done using the following formulas:</p>
+
+\[dZ^{[L]} = A^{[L]} - Y\]
+
+\[dZ^{[l]} = dA^{[l]} \times g^{[l]'}(Z^{[l]})\]
+
+\[dW^{[l]} = \frac{1}{m} dZ^{[l]} \times A^{[l-1]}.T\]
+
+\[db^{[l]} = \frac{1}{m} sum(dZ^{[l]})\]
+
+\[dA^{[l]} = W^{[l+1]}.T \times dZ^{[l+1]}\]
+
+<p>Because <code>layers = [50,10]</code>, <code>range(L)</code> means to run from 0 to L-1 (i.e. layer 0 (hidden layer) and 1 (output layer)). The reversed sequence will access data from layer L-1 to 0 as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+    <span class="n">dA</span><span class="p">,</span> <span class="n">dZ</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{},</span> <span class="p">{},</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">A_prev</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">A_prev</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Calculate dZ for the last layer separately from others (as it uses Softmax activation)
+</span>            <span class="n">dZ</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">-</span> <span class="n">Y</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dA</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">].</span><span class="n">T</span><span class="p">,</span> <span class="n">dZ</span><span class="p">[</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">dZ</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dA</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">where</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Derivative of Relu activation function = 0 if Z &lt; 0 and = 1 otherwise
+</span>        <span class="n">dW</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">m</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dZ</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">A_prev</span><span class="p">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">db</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">m</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">dZ</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span>
+</code></pre></div></div>
+
+<h3 id="step-6-putting-it-all-together">Step 6: Putting it all together</h3>
+
+<p>Now we have had all the components required to build the model. The objective is to train the model with training data and use the optimal weights and biases to make prediction for the testing data. To capture the optimal parameters, we choose those that minimize the test set cost. Later, we use these optimal values and run <code>predict</code> function to calculate Test Accuracy.</p>
+
+<p><strong>Side Note:</strong></p>
+
+<ul>
+  <li>
+    <p>When training the model for hundreds or thousands of iterations, it is handy to have some visualization assistance which shows a progress bar and estimates the remaining time to complete training. In this post, I imported <blue><code>tqdm</code></blue> library for that purpose.</p>
+  </li>
+  <li>
+    <p>You can easily experiment with other fully-connected neural network architectures by changing <code>layers = [ ]</code>.</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train</span><span class="p">():</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_test</span><span class="p">,</span> <span class="n">Y_train_idx</span><span class="p">,</span> <span class="n">Y_test_idx</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
+
+    <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="n">epoch</span> <span class="o">=</span> <span class="mi">2000</span>
+    <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
+    <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">layers</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">epoch</span><span class="p">))</span>
+    <span class="n">min_epoch</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">min_cost</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">W_opt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">b_opt</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>                            
+        <span class="n">Z</span><span class="p">,</span> <span class="n">A</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+        <span class="n">dW</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="n">backward</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">update_params</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">lr</span><span class="p">)</span>
+        <span class="n">cost_train</span> <span class="o">=</span> <span class="n">compute_cost</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Z_test</span><span class="p">,</span> <span class="n">A_test</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+            <span class="n">cost_test</span> <span class="o">=</span> <span class="n">compute_cost</span><span class="p">(</span><span class="n">A_test</span><span class="p">[</span><span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Y_test</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">cost_test</span> <span class="o">&lt;</span> <span class="n">min_cost</span><span class="p">:</span>
+                <span class="n">min_cost</span> <span class="o">=</span> <span class="n">cost_test</span>
+                <span class="n">min_epoch</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">W_opt</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+                <span class="n">b_opt</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">pbar</span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span><span class="s">f"Cost Train = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">cost_train</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s">  -  Cost Test = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">cost_test</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="n">test_acc</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">Y_test_idx</span><span class="p">,</span> <span class="n">W_opt</span><span class="p">,</span> <span class="n">b_opt</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">f'Optimal Epoch: </span><span class="si">{</span><span class="n">min_epoch</span><span class="si">}</span><span class="s">  -  Test Accuracy = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">test_acc</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="wrap-up-highlights">Wrap-up Highlights</h2>
+
+<p>Voila! Now you know how to construct a minimal Neural Network to predict handwritten digits. Although our model is simplistic, the results are pretty decent with <strong>94% accuracy</strong> on the test data. This post is a stepping stone for you to customize your model. In reality, people rarely have to code from scratch thanks to the convenience programming frameworks offer. Hopefully, this sneakpeek into how basic functions work behind the scene can be useful to you in some way.</p>
+
+<p>Full source code is available on my <a href="">Github</a>.</p>
+
+<h2 id="references">References</h2>
+
+<ol class="bibliography"></ol>
+
+  </div>
+
+
+  <div class="page-navigation">
+    
+      <a class="prev" href="/supervised-learning/2020/11/06/simple-linear-regression.html">&larr; Simple Linear Regression: Least Squares VS. Gradient Descent</a>
+    
+
+    
+  </div>
+
+</article>
+
+      </div>
+    </main>
+
+    <div style="clear: both;"/>
+<footer class="site-footer">
+    2019 &copy; Built by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://github.com/jekyll/minima/" target="_blank">minima</a> | View <a href="https://github.com/thuytrinhnguyen/myblog" target="_blank">this</a> on Github | <a href="/tags.html">Tags</a> | <a href="/contact.html">Contact</a> | <a href="/FAQ.html">FAQ</a>
+
+    <p>
+        <a href="/feed.xml" target="_blank">
+            <img src="/assets/images/logo_rss.png" />
+        </a>
+        <a href=" " target="_blank">
+            <img src="/assets/images/logo_scholar.png" />
+        </a>
+        <a href=" " target="_blank">
+            <img src="/assets/images/logo_github.png" />
+        </a>
+        <a href=" " target="_blank">
+            <img src="/assets/images/logo_instagram.png" />
+        </a>
+    </p>
+</footer>
+
+
+  </body>
+
+</html>
