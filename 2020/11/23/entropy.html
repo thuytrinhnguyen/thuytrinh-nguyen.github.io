@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+      
+
+
+
+
+
+
+    
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:image" content="https://raw.githubusercontent.com/thuytrinhnguyen/thuytrinhnguyen.github.io/main/assets/images/learning-rate-gradient-descent.png">
+    <title>Entropy - Information Gain Theory</title>
+
+    <meta name="description" content="Entropy is a basic concept that you might have come across while studying about Decision Tree or machine learning cross-entropy loss function. This post will...">
+
+    <meta content="Chloe's Tech Journey" property="og:site_name">
+    
+        <meta content="Entropy - Information Gain Theory" property="og:title">
+    
+    
+        <meta content="article" property="og:type">
+    
+    
+        <meta content="Entropy is a basic concept that you might have come across while studying about Decision Tree or machine learning cross-entropy loss function. This post will address the two interpretations of entropy to help you understand the concept better." property="og:description">
+    
+    
+        <meta content="http://localhost:4000/2020/11/23/entropy.html" property="og:url">
+    
+    
+        <meta content="2020-11-23T11:46:00+11:00" property="article:published_time">
+        <meta content="http://localhost:4000/about/" property="article:author">
+    
+    
+    
+        
+    
+
+    <link rel="shortcut icon" href="/assets/favicon_cactus.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="canonical" href="http://localhost:4000/2020/11/23/entropy.html">
+
+    <!-- For Latex -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-8161570-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- For Facebook share button -->
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- Twitter cards -->
+    <meta name="twitter:site"    content="@">
+    <meta name="twitter:creator" content="@Chloe Nguyen">
+    <meta name="twitter:title"   content="Entropy - Information Gain Theory">
+
+    
+        <meta name="twitter:description" content="<blockquote>
+  <p>Entropy is a basic concept that you might have come across while studying about Decision Tree or machine learning cross-entropy loss function. This post will address the two interpretations of entropy to help you understand the concept better.</p>
+</blockquote>
+
+">
+    
+
+    
+        <meta name="twitter:card"  content="summary">
+        <meta name="twitter:image" content="">
+    
+    <!-- end of Twitter cards -->
+
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner" id='header-bar'>
+
+    <div class="wrapper">
+        
+        <a class="site-title" href="/">Chloe&#39;s Tech Journey</a>
+
+        <!-- <nav class="site-nav">
+            <a class="page-link" href="http://lilianweng.github.io" target="_blank">&#x1f349; About</a>
+        </nav> -->
+        <nav class="site-nav">
+            <a class="page-link" href="/contact.html">&#x1f984; Contact</a>
+        </nav>
+        <nav class="site-nav">
+            <a class="page-link" href="/FAQ.html">&#x1F64B; FAQ</a>
+        </nav>
+        <!-- <nav class="site-nav">
+            <a class="page-link" href="/log.html">&#x231b; Log</a>
+        </nav> -->
+        <nav class="site-nav">
+            <a class="page-link" href="/archive.html">&#x231b; Archive</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Entropy - Information Gain Theory</h1>
+    <p class="post-meta">
+
+      <time datetime="2020-11-23T11:46:00+11:00" itemprop="datePublished">
+        
+        Nov 23, 2020
+      </time>
+
+      <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        by <span itemprop="name">Chloe Nguyen</span>
+      </span>
+
+      <span>
+        
+      </span>
+      <!--
+      <span class="share-buttons">
+        <span class="share-button"><a class="twitter-share-button" href="https://twitter.com/share" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></span>
+
+        <span class="share-button"><span class="fb-like" data-href="/2020/11/23/entropy.html" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></span></span>
+      </span>
+      <div style="clear: both;"/>
+      -->
+
+    </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <blockquote>
+  <p>Entropy is a basic concept that you might have come across while studying about Decision Tree or machine learning cross-entropy loss function. This post will address the two interpretations of entropy to help you understand the concept better.</p>
+</blockquote>
+
+<!--more-->
+
+<p><mark><b>Highlights</b></mark></p>
+
+<ul class="table-of-content" id="markdown-toc">
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#measure-of-uncertainty" id="markdown-toc-measure-of-uncertainty">Measure of uncertainty</a>    <ul>
+      <li><a href="#two-state-weather-with-equal-likelihood" id="markdown-toc-two-state-weather-with-equal-likelihood">Two-state weather with equal likelihood</a></li>
+      <li><a href="#eight-state-weather-with-equal-likelihood" id="markdown-toc-eight-state-weather-with-equal-likelihood">Eight-state weather with equal likelihood</a></li>
+      <li><a href="#events-with-different-probabilities" id="markdown-toc-events-with-different-probabilities">Events with different probabilities</a></li>
+    </ul>
+  </li>
+  <li><a href="#measure-of-useful-information-information-gain" id="markdown-toc-measure-of-useful-information-information-gain">Measure of useful information (Information gain)</a>    <ul>
+      <li><a href="#relationship-between-entropy-and-information" id="markdown-toc-relationship-between-entropy-and-information">Relationship between Entropy and Information</a></li>
+      <li><a href="#why-information-gain-matters" id="markdown-toc-why-information-gain-matters">Why information gain matters</a></li>
+    </ul>
+  </li>
+  <li><a href="#summary" id="markdown-toc-summary">Summary</a>    <ul>
+      <li><a href="#applications" id="markdown-toc-applications">Applications</a></li>
+      <li><a href="#key-takeaways" id="markdown-toc-key-takeaways">Key Takeaways</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Entropy is a concept of the information theory introduced by Shannon Claude. Today I will discuss two interpretations of this concept, entropy as (1) a measure of uncertainty and as (2) a measure of useful information.</p>
+
+<p>The formula for entropy is:</p>
+
+\[H(p) = -\sum_{i} p_i \times log(p_i)\]
+
+<p>where \(i\) is the total number of possible events and \(p_i\) is the probability of each event.</p>
+
+<p>Since \(log(\frac{1}{p_i}) = - log(p_i)\), another way to phrase this: \(H(p) = \sum_{i} p_i \times log(\frac{1}{p_i})\).</p>
+
+<h2 id="measure-of-uncertainty">Measure of uncertainty</h2>
+
+<p>There are many explanations around entropy, among which entropy as a measure of uncertainty is the most popular idea.</p>
+
+<p>Think of entropy as <strong>How many yes-no question needed on average to reach a decision?</strong></p>
+
+<h3 id="two-state-weather-with-equal-likelihood">Two-state weather with equal likelihood</h3>
+
+<figure>
+<p><img src="/assets/images/entropy-2-50.png" alt="" /></p>
+  <figcaption>Fig. 1. Two-state weather with 50% probability each</figcaption>
+</figure>
+
+<p>For example, if there are only 2 states of the weather <em>Sunny</em> and <em>Rainy</em>, you can just ask one question <em>“Is it sunny tomorrow?”</em>, whether the answer is yes or no, you will know the weather tomorrow in one question. The entropy of this scenario is:</p>
+
+\[H_{2\_states\_equal} = - 0.5 \times log(0.5) - 0.5 \times log(0.5) = 1\]
+
+<h3 id="eight-state-weather-with-equal-likelihood">Eight-state weather with equal likelihood</h3>
+
+<p>What if there are 8 equally-likely states? You will probably need 3 questions to come to the final answer demonstrated in Fig. 2.</p>
+
+<ul>
+  <li>
+    <p><strong>Question 1.</strong> Is the weather in [the upper 4 states]?</p>
+
+    <p>Yes \(\rightarrow\) Eliminate 4 lower states, 4 upper states remaining.</p>
+  </li>
+  <li>
+    <p><strong>Question 2.</strong> Is the weather in [the right hand side 2 states]?</p>
+
+    <p>No \(\rightarrow\) Eliminate 2 right hand side states, 2 states (<em>Sunny</em> &amp; <em>Partially Cloudy</em>) remaining.</p>
+  </li>
+  <li>
+    <p><strong>Question 3.</strong> Is the weather <em>Sunny</em>?</p>
+
+    <p>Yes \(\rightarrow\) Eliminate <em>Partially Cloudy</em>, the final answer is Sunny.</p>
+  </li>
+</ul>
+
+<p>As expected, the entropy is this scenario is:  \(H_{8\_states\_equal} = - 8 \times 0.125 \times log(0.125) = 3\)</p>
+
+<figure>
+<p><img src="/assets/images/entropy-8-3.png" alt="" /></p>
+  <figcaption>Fig. 2. Eight-state weather with 12.5% probability each</figcaption>
+</figure>
+
+<p>From these examples, we reach two conclusions:</p>
+
+<blockquote>
+  <p><strong><mark>(1)</mark> Entropy is the number of yes/no question <em>on average</em> to classify the data.</strong></p>
+</blockquote>
+
+<blockquote>
+  <p><strong><mark>(2)</mark> The higher number of classifiers, the more chaotic the data, hence, the higher the entropy.</strong></p>
+</blockquote>
+
+<p>But, is the number of classifiers the only indicator of uncertainty in a dataset? So far we have only considered cases of events with equal probabilities, let’s have some examples of classes with different likelihood to compare their entropy.</p>
+
+<h3 id="events-with-different-probabilities">Events with different probabilities</h3>
+
+<p>In a tropical country, the weather is mostly sunny (75% of the time) and rainy sometimes (25% of the time).</p>
+
+<figure>
+<p><img src="/assets/images/entropy-2-75.png" alt="" /></p>
+  <figcaption>Fig. 3. Two-state weather with 75% probability sunny and 25% rainy</figcaption>
+</figure>
+
+\[H_{2\_states\_skewed} = - 0.75 \times log(0.75) - 0.25 \times log(0.25)  = 0.81\]
+
+<p>This time, when calculating entropy (the number of questions), we also need to consider the weights of each event. The entropy in this case is \(0.81\), which is less than when Sunny and Rainy weather are equally likely. To confirm whether it is true that we can ask fewer questions when the probabilities of events are not equal, let’s take another example of a 8-state weather of another tropical country.</p>
+
+<figure>
+<p><img src="/assets/images/entropy-8-35.png" alt="" /></p>
+  <figcaption>Fig. 4. Eight-state weather with mixed probabilities</figcaption>
+</figure>
+
+<p>Let’s calculate the entropy of this eight-state weather with mixed probabilities:</p>
+
+\[\begin{aligned}
+H_{8\_states\_skewed\_35} 
+&amp;= - 2 \times 0.35 \times log(0.35) - 2 \times 0.1 \times log(0.1) \\
+&amp; \; \; \; - 2 \times 0.04 \times log(0.04) - 2 \times 0.01 \times log(0.01) \\
+&amp;= 2.23 
+\end{aligned}\]
+
+<p>What if the weather likelihood is even more skewed? Let’s calculate the entropy for this distribution: 45% - 25% - 10% - 10% - 4% - 4% - 1% - 1%.</p>
+
+\[\begin{aligned}
+H_{8\_states\_skewed\_45} 
+&amp;= - 0.45 \times log(0.45) - 0.25 \times log(0.25) - 2 \times 0.1 \times log(0.1) \\
+&amp;\; \; \; - 2 \times 0.04 \times log(0.04) - 2 \times 0.01 \times log(0.01) \\
+&amp;= 2.19
+\end{aligned}\]
+
+<p>Comparison: \(H_{8\_states\_equal} &gt; H_{8\_states\_skewed\_35} &gt; H_{8\_states\_skewed\_45}\)</p>
+
+<p>Therefore, we reach the third conclusion:</p>
+
+<blockquote>
+  <p><strong><mark>(3)</mark> The more skewed the likelihood of events, the less uncertainty of the data, hence, the lower the entropy.</strong></p>
+</blockquote>
+
+<p>By testing the entropy against different situations, we know that conclusion (3) is an accurate statement. However, the intuition of entropy has not been channelled fully. We can look at a related term that can enhance our knowledge of entropy.</p>
+
+<h2 id="measure-of-useful-information-information-gain">Measure of useful information (Information gain)</h2>
+
+<p>A related term with entropy is information. While entropy is the <strong>uncertainty before</strong> decision-making, information is the <strong>additional knowledge after</strong> decision-making.</p>
+
+<h3 id="relationship-between-entropy-and-information">Relationship between Entropy and Information</h3>
+
+<p>Take an extreme example of weather in a desert which is sunny all year round \((p_{Sunny} = 1)\). What is the entropy in this case?</p>
+
+\[H_{sunny\_100} = - log(1) - 0 = 0\]
+
+<p>Comparison: \(H_{2\_states\_equal} &gt; H_{2\_states\_skewed} &gt; H_{sunny\_100}\)</p>
+
+<p>When the weather is always sunny, we are 100% certain \(H_{sunny\_100} = 0\). However, since the weather is always predictable, there is no value in having weather forecast or asking any yes/no questions. Hence, the information gain is zero.</p>
+
+<p>When it is 50% sunny and 50% rainy, by telling that the weather will be rainy tomorrow, our uncertainty reduces by half. Hence, the information we get from knowing the weather will be rainy is: \(log(\frac{1}{0.5})=\) 2 bits of information. Similarly, if the weather station forecasts that tomorrow will be sunny, the amount of information we get is also 2 bits as the two states are equally likely to happen. Taking into account the likelihood of both events, we have the <em>average</em> information gain in this scenario: \(0.5 \times 2 + 0.5 \times 2 = 1\), this is our entropy (\(H_{2\_states\_equal} = 1\))! Therefore, the two interpretations are both accurate, we can look at entropy from different perspectives.</p>
+
+<p>Think about it for a second, you should see why it totally makes sense. If the case is predictable (i.e. there is no uncertainty), there is no new information in telling us what we are already certain of. On the contrary, if the case has many states of different probabilities, we are not sure about the outcome, hence, there is some information gain in telling us what will happen. This takes us to our fourth conclusion:</p>
+
+<blockquote>
+  <p><strong><mark>(4)</mark> The higher the uncertainty (higher entropy), the higher the information gain.</strong></p>
+</blockquote>
+
+<p>But why do we need to know about information if it is just another way to intuitively think about entropy?</p>
+
+<h3 id="why-information-gain-matters">Why information gain matters</h3>
+
+<p>We concern about information gain because we wish to measure the effectiveness of communication: <strong>How to send useful information using the least number of bits?</strong></p>
+
+<p>Remember that we have calculated \(H_{2\_state\_equal} = 1\), this is 1 bit of <strong>useful information</strong>. No matter how we convey the message, only 1 bit is useful in this case (e.g. sending 0-1 signal with 1 being sunny weather and 0 otherwise). In this example, 1 bit is the optimal number of bit we should send to have the most effective communication.</p>
+
+<figure>
+<p><img src="/assets/images/entropy-8-3b.png" alt="" /></p>
+  <figcaption>Eight-state weather with 3-bit assignment</figcaption>
+</figure>
+
+<p>For a 8-state weather with skewed likelihood, \(H_{8\_states\_skewed\_35} = 2.23\). This means no matter how we deliver the message, on average only 2.23 useful bits are received.</p>
+
+<p>If we use 3 bits to denote each state of the weather, the number of bits we send out on average is:</p>
+
+\[H= 2 \times 0.35 \times 3 + 2 \times 0.1 \times 3 + 2 \times 0.04 \times 3 + 2 \times 0.01 \times 3 = 3\]
+
+<p>The result is suboptimal as we are \(0.77\) bit over the optimal value. We can try adjusting the number of bits assigned to each event and look for a combination whose total is the closet to number of useful bits.</p>
+
+<figure>
+<p><img src="/assets/images/entropy-8-5.png" alt="" /></p>
+  <figcaption>Eight-state weather with updated bit assignments</figcaption>
+</figure>
+
+\[H = 2\times 0.35 \times 2 + 2 \times 0.1 \times 3 + 2 \times 0.04 \times 4 + 2 \times 0.01 \times 5 = 2.42\]
+
+<p>We are becoming more effective by assigning fewer bits on the low-value events and <strong>more bits on the rare events</strong>, therefore, we will not waste lots of bits to events that happen most of the time as expected.</p>
+
+<h2 id="summary">Summary</h2>
+
+<h3 id="applications">Applications</h3>
+
+<p>Entropy is used as a splitting criteria for Decision Tree. Most commonly, people use Decision Tree for classification problems whose ultimate goal is to have pure sets in the end. Using entropy, we can measure the impurity in the set, split the data so that after each step, the data is more defined until the set has a zero entropy.</p>
+
+<p>Another widely used term related to entropy is cross-entropy. Instead of measuring the uncertainty within one distribution like entropy, cross-entropy compares two probability distributions. It is a popular loss function in Machine learning to compare model prediction and ground truth values.</p>
+
+<h3 id="key-takeaways">Key Takeaways</h3>
+
+<p>Understanding entropy gives you the intuitive thinking in various problems. The key takeaways from this post are:</p>
+
+<ul>
+  <li>
+    <p><strong>Entropy measures uncertainty:</strong></p>
+
+    <ul>
+      <li>
+        <p>Entropy is the average number of yes/no questions on you ask to classify the data.</p>
+      </li>
+      <li>
+        <p>The more skewed the probabilities of events are, the higher uncertainty, hence, higher entropy.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Entropy measures information gain:</strong></p>
+
+    <ul>
+      <li>
+        <p>When the event is predictable and be more likely to behave in one way, there is little information gain.</p>
+      </li>
+      <li>
+        <p>Therefore, the higher entropy (uncertainty), the higher information gain.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>I hope that this post on entropy has been helpful. Happy learning!</p>
+
+<p><strong>Chloe’s End Note</strong></p>
+<blockquote>
+  <p>It takes me a full week to fully understand this seemingly straightforward concept. But it is such a relief to finally get this concept right so I can move on to Decision Tree smoothly. Also, I hope that the illustrations are joyful to look at. I had a good time drawing them :)</p>
+</blockquote>
+
+  </div>
+
+
+  <div class="page-navigation">
+    
+      <a class="prev" href="/data-analysis/2020/11/16/exploratory-data-analysis.html">&larr; Exploratory Data Analysis in Python</a>
+    
+
+    
+  </div>
+
+</article>
+
+      </div>
+    </main>
+
+    <div style="clear: both;"/>
+<footer class="site-footer">
+    2019 &copy; Built by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://github.com/jekyll/minima/" target="_blank">minima</a> | View <a href="https://github.com/thuytrinhnguyen/myblog" target="_blank">this</a> on Github | <a href="/tags.html">Tags</a> | <a href="/contact.html">Contact</a> | <a href="/FAQ.html">FAQ</a>
+
+    <p>
+        <a href="/feed.xml" target="_blank">
+            <img src="/assets/images/logo_rss.png" />
+        </a>
+        <a href=" " target="_blank">
+            <img src="/assets/images/logo_scholar.png" />
+        </a>
+        <a href=" " target="_blank">
+            <img src="/assets/images/logo_github.png" />
+        </a>
+        <a href=" " target="_blank">
+            <img src="/assets/images/logo_instagram.png" />
+        </a>
+    </p>
+</footer>
+
+
+  </body>
+
+</html>
