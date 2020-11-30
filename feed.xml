@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-11-29T21:27:58+11:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Chloe’s Tech Journey</title><subtitle>Summarize my learning journey</subtitle><author><name>Chloe Nguyen</name></author><entry><title type="html">Kaggle Challenge - Predict Housing Prices</title><link href="http://localhost:4000/2020/11/29/kaggle-housing-price.html" rel="alternate" type="text/html" title="Kaggle Challenge - Predict Housing Prices" /><published>2020-11-29T15:46:00+11:00</published><updated>2020-11-29T15:46:00+11:00</updated><id>http://localhost:4000/2020/11/29/kaggle-housing-price</id><content type="html" xml:base="http://localhost:4000/2020/11/29/kaggle-housing-price.html">&lt;blockquote&gt;
   &lt;p&gt;To document how I cope with m first Kaggle challenge&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -184,6 +185,9 @@
 &lt;p&gt;Calculate gini for each rank (not average values)&lt;/p&gt;
 
 &lt;h3 id=&quot;2&quot;&gt;2.&lt;/h3&gt;</content><author><name>Chloe Nguyen</name></author><category term="supervised-learning" /><category term="decision-tree" /><category term="classification" /><category term="regression" /><summary type="html">This post covers the fundamental concepts in Decision Tree for both regression and classification purposes. From growing a full tree using different splitting criteria to pruning the tree to prevent overfitting, we will go through it all in this blog entry. So let’s buckle up!</summary></entry><entry><title type="html">Entropy - Information Gain Theory</title><link href="http://localhost:4000/2020/11/23/entropy.html" rel="alternate" type="text/html" title="Entropy - Information Gain Theory" /><published>2020-11-23T11:46:00+11:00</published><updated>2020-11-23T11:46:00+11:00</updated><id>http://localhost:4000/2020/11/23/entropy</id><content type="html" xml:base="http://localhost:4000/2020/11/23/entropy.html">&lt;blockquote&gt;
+=======
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-11-27T00:07:28+11:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Chloe’s Tech Journey</title><subtitle>Summarize my learning journey</subtitle><author><name>Chloe Nguyen</name></author><entry><title type="html">Entropy - Information Gain Theory</title><link href="http://localhost:4000/2020/11/23/entropy.html" rel="alternate" type="text/html" title="Entropy - Information Gain Theory" /><published>2020-11-23T11:46:00+11:00</published><updated>2020-11-23T11:46:00+11:00</updated><id>http://localhost:4000/2020/11/23/entropy</id><content type="html" xml:base="http://localhost:4000/2020/11/23/entropy.html">&lt;blockquote&gt;
+>>>>>>> b07acd584747f53769487c384760ed1fabf56641
   &lt;p&gt;Entropy is a basic concept that you might have come across while studying about Decision Tree or machine learning cross-entropy loss function. This post will address the two interpretations of entropy to help you understand the concept better.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -276,7 +280,11 @@
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
+<<<<<<< HEAD
   &lt;p&gt;&lt;strong&gt;&lt;mark&gt;(2)&lt;/mark&gt; The higher number of classifiers, the more random the data, hence, the higher the entropy.&lt;/strong&gt;&lt;/p&gt;
+=======
+  &lt;p&gt;&lt;strong&gt;&lt;mark&gt;(2)&lt;/mark&gt; The higher number of classifiers, the more chaotic the data, hence, the higher the entropy.&lt;/strong&gt;&lt;/p&gt;
+>>>>>>> b07acd584747f53769487c384760ed1fabf56641
 &lt;/blockquote&gt;
 
 &lt;p&gt;But, is the number of classifiers the only indicator of uncertainty in a dataset? So far we have only considered cases of events with equal probabilities, let’s have some examples of classes with different likelihood to compare their entropy.&lt;/p&gt;
@@ -343,10 +351,17 @@ H_{8\_states\_skewed\_45}
 
 &lt;p&gt;When it is 50% sunny and 50% rainy, by telling that the weather will be rainy tomorrow, our uncertainty reduces by half. Hence, the information we get from knowing the weather will be rainy is: \(log(\frac{1}{0.5})=\) 2 bits of information. Similarly, if the weather station forecasts that tomorrow will be sunny, the amount of information we get is also 2 bits as the two states are equally likely to happen. Taking into account the likelihood of both events, we have the &lt;em&gt;average&lt;/em&gt; information gain in this scenario: \(0.5 \times 2 + 0.5 \times 2 = 1\), this is our entropy (\(H_{2\_states\_equal} = 1\))! Therefore, the two interpretations are both accurate, we can look at entropy from different perspectives.&lt;/p&gt;
 
+<<<<<<< HEAD
 &lt;p&gt;Think about it for a second, you should see why it totally makes sense. If the case is predictable (i.e. there is no randomness), there is no new information in telling us what we are already certain of. On the contrary, if the case has many states of different probabilities, we are not sure about the outcome, hence, there is some information gain in telling us what will happen. This takes us to our fourth conclusion:&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;&lt;mark&gt;(4)&lt;/mark&gt; The higher the randomness (higher entropy), the higher the information gain.&lt;/strong&gt;&lt;/p&gt;
+=======
+&lt;p&gt;Think about it for a second, you should see why it totally makes sense. If the case is predictable (i.e. there is no uncertainty), there is no new information in telling us what we are already certain of. On the contrary, if the case has many states of different probabilities, we are not sure about the outcome, hence, there is some information gain in telling us what will happen. This takes us to our fourth conclusion:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;&lt;mark&gt;(4)&lt;/mark&gt; The higher the uncertainty (higher entropy), the higher the information gain.&lt;/strong&gt;&lt;/p&gt;
+>>>>>>> b07acd584747f53769487c384760ed1fabf56641
 &lt;/blockquote&gt;
 
 &lt;p&gt;But why do we need to know about information if it is just another way to intuitively think about entropy?&lt;/p&gt;
@@ -423,7 +438,11 @@ H_{8\_states\_skewed\_45}
 &lt;p&gt;&lt;strong&gt;Chloe’s End Note&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;It takes me a full week to fully understand this seemingly straightforward concept. But it is such a relief to finally get this concept right so I can move on to Decision Tree smoothly. Also, I hope that the illustrations are joyful to look at. I had a good time drawing them :)&lt;/p&gt;
+<<<<<<< HEAD
 &lt;/blockquote&gt;</content><author><name>Chloe Nguyen</name></author><category term="decision-tree" /><category term="information-theory" /><category term="entropy" /><summary type="html">Entropy is a basic concept that you might have come across while studying about Decision Tree or machine learning cross-entropy loss function. This post will address the two interpretations of entropy to help you understand the concept better.</summary></entry><entry><title type="html">Exploratory Data Analysis in Python</title><link href="http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis.html" rel="alternate" type="text/html" title="Exploratory Data Analysis in Python" /><published>2020-11-16T14:08:00+11:00</published><updated>2020-11-16T14:08:00+11:00</updated><id>http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis</id><content type="html" xml:base="http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis.html">&lt;blockquote&gt;
+=======
+&lt;/blockquote&gt;</content><author><name>Chloe Nguyen</name></author><summary type="html">Entropy is a basic concept that you might have come across while studying about Decision Tree or machine learning cross-entropy loss function. This post will address the two interpretations of entropy to help you understand the concept better.</summary></entry><entry><title type="html">Exploratory Data Analysis in Python</title><link href="http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis.html" rel="alternate" type="text/html" title="Exploratory Data Analysis in Python" /><published>2020-11-16T14:08:00+11:00</published><updated>2020-11-16T14:08:00+11:00</updated><id>http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis</id><content type="html" xml:base="http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis.html">&lt;blockquote&gt;
+>>>>>>> b07acd584747f53769487c384760ed1fabf56641
   &lt;p&gt;This post will show you how to perform standard Exploratory Data Analysis using Pandas operations and visualization in Matplotlib and Seaborn libraries.&lt;/p&gt;
 &lt;/blockquote&gt;
 

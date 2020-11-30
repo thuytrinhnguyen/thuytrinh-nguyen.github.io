@@ -40,12 +40,15 @@
     
     
         
+<<<<<<< HEAD
         <meta content="decision-tree" property="article:tag">
         
         <meta content="information-theory" property="article:tag">
         
         <meta content="entropy" property="article:tag">
         
+=======
+>>>>>>> b07acd584747f53769487c384760ed1fabf56641
     
 
     <link rel="shortcut icon" href="/assets/favicon_cactus.ico">
@@ -148,6 +151,7 @@
 
       <span>
         
+<<<<<<< HEAD
           
           <a class="post-tag" href="/myblog/tag/decision-tree"><nobr>decision-tree</nobr>&nbsp;</a>
         
@@ -157,6 +161,8 @@
           
           <a class="post-tag" href="/myblog/tag/entropy"><nobr>entropy</nobr>&nbsp;</a>
         
+=======
+>>>>>>> b07acd584747f53769487c384760ed1fabf56641
       </span>
       <!--
       <span class="share-buttons">
@@ -264,7 +270,11 @@
 </blockquote>
 
 <blockquote>
+<<<<<<< HEAD
   <p><strong><mark>(2)</mark> The higher number of classifiers, the more random the data, hence, the higher the entropy.</strong></p>
+=======
+  <p><strong><mark>(2)</mark> The higher number of classifiers, the more chaotic the data, hence, the higher the entropy.</strong></p>
+>>>>>>> b07acd584747f53769487c384760ed1fabf56641
 </blockquote>
 
 <p>But, is the number of classifiers the only indicator of uncertainty in a dataset? So far we have only considered cases of events with equal probabilities, let’s have some examples of classes with different likelihood to compare their entropy.</p>
@@ -331,10 +341,17 @@ H_{8\_states\_skewed\_45}
 
 <p>When it is 50% sunny and 50% rainy, by telling that the weather will be rainy tomorrow, our uncertainty reduces by half. Hence, the information we get from knowing the weather will be rainy is: \(log(\frac{1}{0.5})=\) 2 bits of information. Similarly, if the weather station forecasts that tomorrow will be sunny, the amount of information we get is also 2 bits as the two states are equally likely to happen. Taking into account the likelihood of both events, we have the <em>average</em> information gain in this scenario: \(0.5 \times 2 + 0.5 \times 2 = 1\), this is our entropy (\(H_{2\_states\_equal} = 1\))! Therefore, the two interpretations are both accurate, we can look at entropy from different perspectives.</p>
 
+<<<<<<< HEAD
 <p>Think about it for a second, you should see why it totally makes sense. If the case is predictable (i.e. there is no randomness), there is no new information in telling us what we are already certain of. On the contrary, if the case has many states of different probabilities, we are not sure about the outcome, hence, there is some information gain in telling us what will happen. This takes us to our fourth conclusion:</p>
 
 <blockquote>
   <p><strong><mark>(4)</mark> The higher the randomness (higher entropy), the higher the information gain.</strong></p>
+=======
+<p>Think about it for a second, you should see why it totally makes sense. If the case is predictable (i.e. there is no uncertainty), there is no new information in telling us what we are already certain of. On the contrary, if the case has many states of different probabilities, we are not sure about the outcome, hence, there is some information gain in telling us what will happen. This takes us to our fourth conclusion:</p>
+
+<blockquote>
+  <p><strong><mark>(4)</mark> The higher the uncertainty (higher entropy), the higher the information gain.</strong></p>
+>>>>>>> b07acd584747f53769487c384760ed1fabf56641
 </blockquote>
 
 <p>But why do we need to know about information if it is just another way to intuitively think about entropy?</p>
@@ -422,8 +439,11 @@ H_{8\_states\_skewed\_45}
     
 
     
+<<<<<<< HEAD
       <a class="next" href="/supervised-learning/2020/11/27/decision-tree.html">Decision Tree &rarr;</a>
     
+=======
+>>>>>>> b07acd584747f53769487c384760ed1fabf56641
   </div>
 
 </article>
