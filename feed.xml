@@ -1,193 +1,4 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-11-29T21:27:58+11:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Chloe’s Tech Journey</title><subtitle>Summarize my learning journey</subtitle><author><name>Chloe Nguyen</name></author><entry><title type="html">Kaggle Challenge - Predict Housing Prices</title><link href="http://localhost:4000/2020/11/29/kaggle-housing-price.html" rel="alternate" type="text/html" title="Kaggle Challenge - Predict Housing Prices" /><published>2020-11-29T15:46:00+11:00</published><updated>2020-11-29T15:46:00+11:00</updated><id>http://localhost:4000/2020/11/29/kaggle-housing-price</id><content type="html" xml:base="http://localhost:4000/2020/11/29/kaggle-housing-price.html">&lt;blockquote&gt;
-  &lt;p&gt;To document how I cope with m first Kaggle challenge&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;mark&gt;&lt;b&gt;Highlights&lt;/b&gt;&lt;/mark&gt;&lt;/p&gt;
-
-&lt;ul class=&quot;table-of-content&quot; id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#step-1-explore-descriptive-statistics-of-all-fields&quot; id=&quot;markdown-toc-step-1-explore-descriptive-statistics-of-all-fields&quot;&gt;Step 1: Explore descriptive statistics of all fields&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;step-1-explore-descriptive-statistics-of-all-fields&quot;&gt;Step 1: Explore descriptive statistics of all fields&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Check and fix dtypes&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Cross check with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data_description.txt&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Change the following columns from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;int64&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;float64&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;category&lt;/code&gt;:
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MSSubClass&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YearBuilt&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YearRemodAdd&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GarageYrBlt&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MoSold&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YrSold&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Change columns that are in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;object&lt;/code&gt; type into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;category&lt;/code&gt; type&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Check distribution of numerical fields&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Check distribution of categorical fields&lt;/strong&gt;&lt;/p&gt;</content><author><name>Chloe Nguyen</name></author><category term="kaggle" /><summary type="html">To document how I cope with m first Kaggle challenge</summary></entry><entry><title type="html">Decision Tree</title><link href="http://localhost:4000/supervised-learning/2020/11/27/decision-tree.html" rel="alternate" type="text/html" title="Decision Tree" /><published>2020-11-27T15:44:00+11:00</published><updated>2020-11-27T15:44:00+11:00</updated><id>http://localhost:4000/supervised-learning/2020/11/27/decision-tree</id><content type="html" xml:base="http://localhost:4000/supervised-learning/2020/11/27/decision-tree.html">&lt;blockquote&gt;
-  &lt;p&gt;This post covers the fundamental concepts in Decision Tree for both regression and classification purposes. From growing a full tree using different splitting criteria to pruning the tree to prevent overfitting, we will go through it all in this blog entry. So let’s buckle up!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;mark&gt;&lt;b&gt;Highlights&lt;/b&gt;&lt;/mark&gt;&lt;/p&gt;
-
-&lt;ul class=&quot;table-of-content&quot; id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#purpose&quot; id=&quot;markdown-toc-purpose&quot;&gt;Purpose&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#building-decision-tree&quot; id=&quot;markdown-toc-building-decision-tree&quot;&gt;Building Decision Tree&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#regression-tree-measure-of-purity&quot; id=&quot;markdown-toc-regression-tree-measure-of-purity&quot;&gt;Regression tree: Measure of purity&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#classification-tree-measure-of-purity&quot; id=&quot;markdown-toc-classification-tree-measure-of-purity&quot;&gt;Classification tree: Measure of purity&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#how-to-build-a-decision-tree&quot; id=&quot;markdown-toc-how-to-build-a-decision-tree&quot;&gt;How to build a decision tree&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#1-choose-the-root-node&quot; id=&quot;markdown-toc-1-choose-the-root-node&quot;&gt;1. Choose the root node&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#deal-with-numerical-data-dont-include-everything---find-a-breaking-point--half-the-option&quot; id=&quot;markdown-toc-deal-with-numerical-data-dont-include-everything---find-a-breaking-point--half-the-option&quot;&gt;Deal with numerical data (Dont include everything - Find a breaking point =&amp;gt; half the option)&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#2&quot; id=&quot;markdown-toc-2&quot;&gt;2.&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;purpose&quot;&gt;Purpose&lt;/h2&gt;
-
-&lt;p&gt;Decision tree is a popular technique in supervised learning. The full name of this technique is CART, which stands of Classification-And-Regression-Tree. From its name you can probably guess that Decision tree is capable of both &lt;strong&gt;classification&lt;/strong&gt; and &lt;strong&gt;regression&lt;/strong&gt; problems. In this post, I will walk you through both Regression tree and Classification tree, which share many core ideas.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;So, in general, what does Decision tree do?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Decision tree builds a set of rules that partition the data in half repeatedly. The ultimate goal is to stratify observations into segments to either classify or predict values of future data points.&lt;/p&gt;
-
-&lt;figure class=&quot;width_500&quot;&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/images/decision-tree-reg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;figcaption&gt;Fig. 1. Example of a regression tree&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Fig. 1. demonstrates a regression tree to predict house prices where each leaf node (i.e. the last node on each branch) is the &lt;strong&gt;average&lt;/strong&gt; price of the houses matching the previous conditions. For example, the mean price of all houses that (1) locate in “Inner city” area and (2) have no more than 2 bedrooms, is $400K. Using this regression tree, if a future data points falls into this group, we can predict its price to be $400K.&lt;/p&gt;
-
-&lt;figure class=&quot;width_500&quot;&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/images/decision-tree-classification.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;figcaption&gt;Fig. 2. Example of a classification tree&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Classification trees are slightly different as their leaves are categories instead of numerical values. Fig. 2. shows that although the leaf nodes in classification trees cannot be numerical, we can still include numerical predictors in our tree as internal nodes (e.g. Price &amp;lt; $700K). We will discuss the details of how to work numerical independent variables in decision trees in later section. For now, looking at our example, if a house (1) is outside “Inner city” and (2) its price is greater than $700k, we will guess that it is a Beach House.&lt;/p&gt;
-
-&lt;h2 id=&quot;building-decision-tree&quot;&gt;Building Decision Tree&lt;/h2&gt;
-
-&lt;p&gt;Decision trees of both regression and classification type follow the same procedure.&lt;/p&gt;
-
-&lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/images/decision-tree-question.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;figcaption&gt;Fig. 3. Questions to ask when building a tree&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Fig. 3. illustrates the standard architecture of decision trees along with the questions that you may ask when constructing each section of the tree. In general, there are three main steps in building a tree that concern with the root node, internal nodes and leaf nodes.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Define a root node&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Expand the tree (recursively)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 3:&lt;/strong&gt; Decide when to stop&lt;/p&gt;
-
-&lt;p&gt;Recall that our goal is to have final groups that are pure (i.e. all members of the group belong to the same class). Therefore, we need to define a &lt;strong&gt;measure of purity&lt;/strong&gt; to compare splitting options, which will guide us through all 3 steps listed above.&lt;/p&gt;
-
-&lt;h3 id=&quot;regression-tree-measure-of-purity&quot;&gt;Regression tree: Measure of purity&lt;/h3&gt;
-
-&lt;p&gt;To decide which independent variable is the best to sort the data, we use Residual Sum of Square (RSS) as the measure of purity.&lt;/p&gt;
-
-\[RSS = \sum_{j}^{J}\sum_{i \in j}(y_i - \bar{y_j})^2\]
-
-&lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/images/decision-tree-boundary.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;figcaption&gt;Fig. 4. Distance to city and No of bedrooms to predict House price&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&quot;classification-tree-measure-of-purity&quot;&gt;Classification tree: Measure of purity&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Ask questions&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Classify the data based on the answer&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Example&lt;/p&gt;
-
-&lt;p&gt;Yes/No&lt;/p&gt;
-
-&lt;p&gt;Rank (score 1, 2)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Leaves can be numeric or categorical&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Can have different questions on each side&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;how-to-build-a-decision-tree&quot;&gt;How to build a decision tree&lt;/h2&gt;
-
-&lt;h3 id=&quot;1-choose-the-root-node&quot;&gt;1. Choose the root node&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;How well a variable predict&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Measure Impurity: Which one separate the classes the best (less mixed)&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Calculate GINI… for all variables&lt;/p&gt;
-
-&lt;p&gt;Choose the variable with lowest GINI (impurity) to be the root node&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=7VeUPuFGJHk&amp;amp;t=1s&quot;&gt;StatQuest&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;If the impurity does not reduce after another step =&amp;gt; Leaf node (13:42)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;GINI&lt;/strong&gt;&lt;/p&gt;
-
-\[G = 1 - \sum_{i} p_{c_i} ^{2}\]
-
-&lt;p&gt;&lt;strong&gt;Entropy&lt;/strong&gt;&lt;/p&gt;
-
-\[H = - \sum_{i}p(c_i) \times log_{2}p(c_i)\]
-
-&lt;h3 id=&quot;deal-with-numerical-data-dont-include-everything---find-a-breaking-point--half-the-option&quot;&gt;Deal with numerical data (Dont include everything - Find a breaking point =&amp;gt; half the option)&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Continuous&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Sort data&lt;/p&gt;
-
-&lt;p&gt;Calculate average weight of every 2 data points = Breaking point&lt;/p&gt;
-
-&lt;p&gt;Calculate Gini for all breaking points&lt;/p&gt;
-
-&lt;p&gt;Choose one with the lowest Gini&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Discrete (ranking 1 2 3)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Calculate gini for each rank (not average values)&lt;/p&gt;
-
-&lt;h3 id=&quot;2&quot;&gt;2.&lt;/h3&gt;</content><author><name>Chloe Nguyen</name></author><category term="supervised-learning" /><category term="decision-tree" /><category term="classification" /><category term="regression" /><summary type="html">This post covers the fundamental concepts in Decision Tree for both regression and classification purposes. From growing a full tree using different splitting criteria to pruning the tree to prevent overfitting, we will go through it all in this blog entry. So let’s buckle up!</summary></entry><entry><title type="html">Entropy - Information Gain Theory</title><link href="http://localhost:4000/2020/11/23/entropy.html" rel="alternate" type="text/html" title="Entropy - Information Gain Theory" /><published>2020-11-23T11:46:00+11:00</published><updated>2020-11-23T11:46:00+11:00</updated><id>http://localhost:4000/2020/11/23/entropy</id><content type="html" xml:base="http://localhost:4000/2020/11/23/entropy.html">&lt;blockquote&gt;
-=======
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-11-27T00:07:28+11:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Chloe’s Tech Journey</title><subtitle>Summarize my learning journey</subtitle><author><name>Chloe Nguyen</name></author><entry><title type="html">Entropy - Information Gain Theory</title><link href="http://localhost:4000/2020/11/23/entropy.html" rel="alternate" type="text/html" title="Entropy - Information Gain Theory" /><published>2020-11-23T11:46:00+11:00</published><updated>2020-11-23T11:46:00+11:00</updated><id>http://localhost:4000/2020/11/23/entropy</id><content type="html" xml:base="http://localhost:4000/2020/11/23/entropy.html">&lt;blockquote&gt;
->>>>>>> b07acd584747f53769487c384760ed1fabf56641
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-03T00:19:00+10:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Chloe’s Tech Journey</title><subtitle>Summarize my learning journey</subtitle><author><name>Chloe Nguyen</name></author><entry><title type="html">Entropy - Information Gain Theory</title><link href="http://localhost:4000/2020/11/23/entropy.html" rel="alternate" type="text/html" title="Entropy - Information Gain Theory" /><published>2020-11-23T11:46:00+11:00</published><updated>2020-11-23T11:46:00+11:00</updated><id>http://localhost:4000/2020/11/23/entropy</id><content type="html" xml:base="http://localhost:4000/2020/11/23/entropy.html">&lt;blockquote&gt;
   &lt;p&gt;Entropy is a basic concept that you might have come across while studying about Decision Tree or machine learning cross-entropy loss function. This post will address the two interpretations of entropy to help you understand the concept better.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -280,11 +91,7 @@
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
-<<<<<<< HEAD
   &lt;p&gt;&lt;strong&gt;&lt;mark&gt;(2)&lt;/mark&gt; The higher number of classifiers, the more random the data, hence, the higher the entropy.&lt;/strong&gt;&lt;/p&gt;
-=======
-  &lt;p&gt;&lt;strong&gt;&lt;mark&gt;(2)&lt;/mark&gt; The higher number of classifiers, the more chaotic the data, hence, the higher the entropy.&lt;/strong&gt;&lt;/p&gt;
->>>>>>> b07acd584747f53769487c384760ed1fabf56641
 &lt;/blockquote&gt;
 
 &lt;p&gt;But, is the number of classifiers the only indicator of uncertainty in a dataset? So far we have only considered cases of events with equal probabilities, let’s have some examples of classes with different likelihood to compare their entropy.&lt;/p&gt;
@@ -351,17 +158,10 @@ H_{8\_states\_skewed\_45}
 
 &lt;p&gt;When it is 50% sunny and 50% rainy, by telling that the weather will be rainy tomorrow, our uncertainty reduces by half. Hence, the information we get from knowing the weather will be rainy is: \(log(\frac{1}{0.5})=\) 2 bits of information. Similarly, if the weather station forecasts that tomorrow will be sunny, the amount of information we get is also 2 bits as the two states are equally likely to happen. Taking into account the likelihood of both events, we have the &lt;em&gt;average&lt;/em&gt; information gain in this scenario: \(0.5 \times 2 + 0.5 \times 2 = 1\), this is our entropy (\(H_{2\_states\_equal} = 1\))! Therefore, the two interpretations are both accurate, we can look at entropy from different perspectives.&lt;/p&gt;
 
-<<<<<<< HEAD
 &lt;p&gt;Think about it for a second, you should see why it totally makes sense. If the case is predictable (i.e. there is no randomness), there is no new information in telling us what we are already certain of. On the contrary, if the case has many states of different probabilities, we are not sure about the outcome, hence, there is some information gain in telling us what will happen. This takes us to our fourth conclusion:&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;&lt;mark&gt;(4)&lt;/mark&gt; The higher the randomness (higher entropy), the higher the information gain.&lt;/strong&gt;&lt;/p&gt;
-=======
-&lt;p&gt;Think about it for a second, you should see why it totally makes sense. If the case is predictable (i.e. there is no uncertainty), there is no new information in telling us what we are already certain of. On the contrary, if the case has many states of different probabilities, we are not sure about the outcome, hence, there is some information gain in telling us what will happen. This takes us to our fourth conclusion:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;&lt;mark&gt;(4)&lt;/mark&gt; The higher the uncertainty (higher entropy), the higher the information gain.&lt;/strong&gt;&lt;/p&gt;
->>>>>>> b07acd584747f53769487c384760ed1fabf56641
 &lt;/blockquote&gt;
 
 &lt;p&gt;But why do we need to know about information if it is just another way to intuitively think about entropy?&lt;/p&gt;
@@ -438,11 +238,7 @@ H_{8\_states\_skewed\_45}
 &lt;p&gt;&lt;strong&gt;Chloe’s End Note&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;It takes me a full week to fully understand this seemingly straightforward concept. But it is such a relief to finally get this concept right so I can move on to Decision Tree smoothly. Also, I hope that the illustrations are joyful to look at. I had a good time drawing them :)&lt;/p&gt;
-<<<<<<< HEAD
 &lt;/blockquote&gt;</content><author><name>Chloe Nguyen</name></author><category term="decision-tree" /><category term="information-theory" /><category term="entropy" /><summary type="html">Entropy is a basic concept that you might have come across while studying about Decision Tree or machine learning cross-entropy loss function. This post will address the two interpretations of entropy to help you understand the concept better.</summary></entry><entry><title type="html">Exploratory Data Analysis in Python</title><link href="http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis.html" rel="alternate" type="text/html" title="Exploratory Data Analysis in Python" /><published>2020-11-16T14:08:00+11:00</published><updated>2020-11-16T14:08:00+11:00</updated><id>http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis</id><content type="html" xml:base="http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis.html">&lt;blockquote&gt;
-=======
-&lt;/blockquote&gt;</content><author><name>Chloe Nguyen</name></author><summary type="html">Entropy is a basic concept that you might have come across while studying about Decision Tree or machine learning cross-entropy loss function. This post will address the two interpretations of entropy to help you understand the concept better.</summary></entry><entry><title type="html">Exploratory Data Analysis in Python</title><link href="http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis.html" rel="alternate" type="text/html" title="Exploratory Data Analysis in Python" /><published>2020-11-16T14:08:00+11:00</published><updated>2020-11-16T14:08:00+11:00</updated><id>http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis</id><content type="html" xml:base="http://localhost:4000/data-analysis/2020/11/16/exploratory-data-analysis.html">&lt;blockquote&gt;
->>>>>>> b07acd584747f53769487c384760ed1fabf56641
   &lt;p&gt;This post will show you how to perform standard Exploratory Data Analysis using Pandas operations and visualization in Matplotlib and Seaborn libraries.&lt;/p&gt;
 &lt;/blockquote&gt;
 
